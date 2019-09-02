@@ -8,4 +8,7 @@
     <color name="btnSecondary">#45FF4B</color>
     <color name="loginBackground">#85C03C</color>
     <color name="loginEditTextBg">#4BFFFFFF</color>
+
+    <color name="bottom_nav_item_inactive">#AEFDFDFD</color>
+    <color name="bottom_nav_item_active">#FDFDFD</color>
 </resources>
