@@ -35,4 +35,7 @@ dependencies {
     //Firebase
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-database:19.0.0'
+
+    //SearchBar
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
 }

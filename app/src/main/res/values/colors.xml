@@ -11,4 +11,8 @@
 
     <color name="bottom_nav_item_inactive">#AEFDFDFD</color>
     <color name="bottom_nav_item_active">#FDFDFD</color>
+
+    <color name="product_card_price">#1DAF00</color>
+    <color name="product_card_title">#313131</color>
+
 </resources>
