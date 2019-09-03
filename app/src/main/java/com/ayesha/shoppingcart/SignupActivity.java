@@ -1,20 +1,28 @@
 package com.ayesha.shoppingcart;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.jgabrielfreitas.core.BlurImageView;
 
 public class SignupActivity extends AppCompatActivity {
     private BlurImageView bg;
-    private MaterialButton btnSignup, btnLogin;
+    private MaterialButton btnSignup, btnLogin,reset;
     private TextInputEditText email, firstName, lastName, number, address, password, passwordConfirm;
+    private FirebaseAuth auth;
+    private Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,6 +31,9 @@ public class SignupActivity extends AppCompatActivity {
         bg = findViewById(R.id.bg);
         bg.setBlur(1.5f);
 
+        context = this;
+
+        auth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email);
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
@@ -31,7 +42,10 @@ public class SignupActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         passwordConfirm = findViewById(R.id.passwordConfirm);
 
+        if(auth.getCurrentUser()!=null) Constants.openMain(context);
+
         btnSignup = findViewById(R.id.btnRegister);
+        reset = findViewById(R.id.reset);
         btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,10 +59,41 @@ public class SignupActivity extends AppCompatActivity {
                 signup();
             }
         });
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearAllFields();
+            }
+        });
     }
 
     private void signup() {
-        validate();
+        if(validate()){
+            auth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        Constants.showSnack(reset,"SignUp Complete");
+                        auth = FirebaseAuth.getInstance();
+                        if(auth.getCurrentUser()!=null){
+                            Constants.openMain(context);
+                        }
+                    }else {
+                        Constants.showSnack(reset,"SignUp Failed");
+                    }
+                }
+            });
+        }
+    }
+
+    private void clearAllFields(){
+        email.setText("");
+        firstName.setText("");
+        lastName.setText("");
+        number.setText("");
+        address.setText("");
+        password.setText("");
+        passwordConfirm.setText("");
     }
 
     private boolean validate() {

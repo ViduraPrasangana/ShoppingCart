@@ -244,38 +244,49 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        android:clipToPadding="false"
         android:gravity="center"
         android:padding="7dp"
-        android:clipToPadding="false">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        app:layout_constraintVertical_bias="0">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegister"
-            android:transitionName="register"
             android:layout_width="@dimen/loginButtonWidthPri"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:shadowRadius="0"
             android:background="@color/btnPrimary"
-            android:text="Register"/>
+            android:shadowRadius="0"
+            android:text="Register"
+            android:transitionName="register" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnLogin"
-            android:transitionName="login"
             android:layout_width="@dimen/registerButtonWidthSec"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/btnSecondary"
             android:text="Login"
-            android:backgroundTint="@color/btnSecondary"/>
+            android:transitionName="login" />
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset Fields"
+        app:layout_constraintBottom_toBottomOf="@+id/bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

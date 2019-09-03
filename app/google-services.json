@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "874068250864",
+    "firebase_url": "https://hmc-stores.firebaseio.com",
+    "project_id": "hmc-stores",
+    "storage_bucket": "hmc-stores.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874068250864:android:f38e17d4c519d5a5",
+        "android_client_info": {
+          "package_name": "com.ayesha.shoppingcart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "874068250864-r6gf3gl65koe5p52kut86v1pme5m5qe4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ayesha.shoppingcart",
+            "certificate_hash": "6d9932716f1c3b2ce26adb8d6c0a3817c77eebce"
+          }
+        },
+        {
+          "client_id": "874068250864-j22dejdkbggdk9v006l4mbbhppnjk9ac.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATC8O_ZfDgJPTjmJY5071G--gMgA-cYFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "874068250864-j22dejdkbggdk9v006l4mbbhppnjk9ac.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
