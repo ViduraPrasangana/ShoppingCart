@@ -1,11 +1,10 @@
-package com.hunteralex.shoppingcart;
+package com.ayesha.shoppingcart;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

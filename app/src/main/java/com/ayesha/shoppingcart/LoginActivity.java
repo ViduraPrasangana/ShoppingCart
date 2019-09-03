@@ -1,4 +1,4 @@
-package com.hunteralex.shoppingcart;
+package com.ayesha.shoppingcart;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;

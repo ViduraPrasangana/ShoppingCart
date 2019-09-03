@@ -1,4 +1,4 @@
-package com.hunteralex.shoppingcart;
+package com.ayesha.shoppingcart;
 
 import org.junit.Test;
 
