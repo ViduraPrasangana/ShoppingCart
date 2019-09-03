@@ -15,11 +15,13 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.jgabrielfreitas.core.BlurImageView;
 
 public class SignupActivity extends AppCompatActivity {
     private BlurImageView bg;
-    private MaterialButton btnSignup, btnLogin,reset;
+    private MaterialButton btnSignup, btnLogin, reset;
     private TextInputEditText email, firstName, lastName, number, address, password, passwordConfirm;
     private FirebaseAuth auth;
     private Context context;
@@ -42,7 +44,7 @@ public class SignupActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         passwordConfirm = findViewById(R.id.passwordConfirm);
 
-        if(auth.getCurrentUser()!=null) Constants.openMain(context);
+        if (auth.getCurrentUser() != null) Constants.openMain(context);
 
         btnSignup = findViewById(R.id.btnRegister);
         reset = findViewById(R.id.reset);
@@ -68,25 +70,44 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void signup() {
-        if(validate()){
-            auth.createUserWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        if (validate()) {
+            auth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-                        Constants.showSnack(reset,"SignUp Complete");
+                    if (task.isSuccessful()) {
+                        Constants.showSnack(reset, "SignUp Complete");
                         auth = FirebaseAuth.getInstance();
-                        if(auth.getCurrentUser()!=null){
+                        if (auth.getCurrentUser() != null) {
+                            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users/" + auth.getCurrentUser().getUid() + "/");
+                            User currentUser = getUser();
+                            if (currentUser == null) {
+                                Constants.showSnack(reset, "SignUp failed");
+                            } else {
+                                dbRef.setValue(currentUser);
+                            }
                             Constants.openMain(context);
                         }
-                    }else {
-                        Constants.showSnack(reset,"SignUp Failed");
+                    } else {
+                        Constants.showSnack(reset, "SignUp Failed");
                     }
                 }
             });
         }
     }
 
-    private void clearAllFields(){
+    private User getUser() {
+        if (validate()) {
+            return new User(
+                    email.getText().toString(),
+                    firstName.getText().toString(),
+                    lastName.getText().toString(),
+                    number.getText().toString(),
+                    address.getText().toString());
+        }
+        return null;
+    }
+
+    private void clearAllFields() {
         email.setText("");
         firstName.setText("");
         lastName.setText("");
@@ -121,18 +142,18 @@ public class SignupActivity extends AppCompatActivity {
         if (isEmpty(password)) {
             password.setError("password can't be empty");
             valid = false;
-        }else if(TextUtils.getTrimmedLength(password.getText())<8){
+        } else if (TextUtils.getTrimmedLength(password.getText()) < 8) {
             password.setError("password length should be more than 7");
             valid = false;
         }
-        if (isEmpty(passwordConfirm) || ( passwordConfirm.getText()!=null && !passwordConfirm.getText().toString().equals(password.getText().toString()))) {
+        if (isEmpty(passwordConfirm) || (passwordConfirm.getText() != null && !passwordConfirm.getText().toString().equals(password.getText().toString()))) {
             passwordConfirm.setError("Password doesn't match");
             valid = false;
         }
 
-        if(valid){
+        if (valid) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
