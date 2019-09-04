@@ -8,6 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class CategoryFragment extends Fragment {
     //Categories!//
@@ -19,10 +23,27 @@ public class CategoryFragment extends Fragment {
     //--Fish
     //--Liquor
     //--Chilled
-    Category FrozenFood = new Category(0,)
+
+
+    private ArrayList<Category>categories = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.categories_fragment,container,false);
+        View view =  inflater.inflate(R.layout.categories_fragment,container,false);
+        initcategories(view);
+        return view;
+    }
+
+    private void initcategories(View view){
+        this.categories = Constants.getCategoryArrayList();
+        this.initRecycleView(view);
+    }
+
+    private void initRecycleView(View view){
+        RecyclerView recyclerView = view.findViewById(R.id.categoryRecyclerLayout);
+        RecyclerViewAdapterCategory adapter = new RecyclerViewAdapterCategory(getActivity(),categories);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 }

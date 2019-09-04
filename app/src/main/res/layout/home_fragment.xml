@@ -25,6 +25,7 @@
                 android:padding="10dp"
                 android:text="Home"
                 android:textAlignment="center"
+                android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
