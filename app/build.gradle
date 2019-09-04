@@ -41,6 +41,16 @@ dependencies {
 
     //SearchBar
     implementation 'com.github.mancj:MaterialSearchBar:0.8.2'
+
+    //RecyclerView
+    implementation 'com.android.support:recyclerview-v7:29.0.0'
+
+    //Round ImageView
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
+
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

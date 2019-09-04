@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+
     <com.jgabrielfreitas.core.BlurImageView
         android:id="@+id/bg"
         android:transitionName="bgImage"
