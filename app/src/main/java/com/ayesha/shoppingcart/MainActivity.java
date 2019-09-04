@@ -1,5 +1,6 @@
 package com.ayesha.shoppingcart;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -10,6 +11,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -17,10 +20,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private LinearLayout root;
     private MainPageAdapter mainPageAdapter;
     private ViewPager viewPager;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+        context = this;
+        setupImageLoader();
 
         root = findViewById(R.id.root);
         bnv = findViewById(R.id.bottom_navigation);
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             }
         });
+        viewPager.setOffscreenPageLimit(4);
     }
 
     @Override
@@ -77,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
         return true;
+    }
+
+    private void setupImageLoader(){
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
+        ImageLoader.getInstance().init(config);
     }
 
 }
