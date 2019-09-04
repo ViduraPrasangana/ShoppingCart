@@ -10,6 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class CategoryFragment extends Fragment {
+    //Categories!//
+    //--Frozen food
+    //--Grocery
+    //--Vegetables
+    //--Fruits
+    //--Meat
+    //--Fish
+    //--Liquor
+    //--Chilled
+    Category FrozenFood = new Category(0,)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
