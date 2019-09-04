@@ -151,11 +151,7 @@ public class SignupActivity extends AppCompatActivity {
             valid = false;
         }
 
-        if (valid) {
-            return true;
-        } else {
-            return false;
-        }
+        return valid;
     }
 
     private boolean isEmpty(TextInputEditText view) {
