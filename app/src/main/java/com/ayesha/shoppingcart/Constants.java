@@ -19,7 +19,7 @@ class Constants {
     static Category fish = new Category(0,R.mipmap.category_fish,"Fish");
     static Category liquor = new Category(0,R.mipmap.category_liquor,"Liquor");
     static Category chilled = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
-    static Category chilled2 = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
+    //static Category chilled2 = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
 
     static ArrayList<Category> getCategoryArrayList(){
         ArrayList<Category> categories = new ArrayList<>();
@@ -32,7 +32,7 @@ class Constants {
         categories.add(fish);
         categories.add(liquor);
         categories.add(chilled);
-        categories.add(chilled2);
+        //categories.add(chilled2);
 
         return categories;
     }
