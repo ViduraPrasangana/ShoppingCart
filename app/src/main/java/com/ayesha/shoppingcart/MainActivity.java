@@ -1,6 +1,7 @@
 package com.ayesha.shoppingcart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
@@ -11,22 +12,35 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private BottomNavigationView bnv;
     private LinearLayout root;
     private MainPageAdapter mainPageAdapter;
     private ViewPager viewPager;
     private Context context;
+
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         context = this;
+        auth = FirebaseAuth.getInstance();
         setupImageLoader();
+        checkUser();
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                checkUser();
+            }
+        };
 
         root = findViewById(R.id.root);
         bnv = findViewById(R.id.bottom_navigation);
@@ -43,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         bnv.setSelectedItemId(R.id.homeNav);
                         break;
@@ -67,9 +81,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         viewPager.setOffscreenPageLimit(4);
     }
 
+    private void checkUser() {
+        if (auth.getCurrentUser() == null) {
+            openLogin();
+            finish();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(authStateListener!=null)
+            auth.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(authStateListener!=null)
+            auth.removeAuthStateListener(authStateListener);
+    }
+
+    private void openLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
+    }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.homeNav:
                 viewPager.setCurrentItem(0);
                 break;
@@ -86,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return true;
     }
 
-    private void setupImageLoader(){
+    private void setupImageLoader() {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).build();
         ImageLoader.getInstance().init(config);
     }
