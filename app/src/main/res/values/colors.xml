@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#264586</color>
+    <color name="colorPrimaryDark">#002057</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="btnPrimary">#C5D500</color>
-    <color name="btnSecondary">#45FF4B</color>
+    <color name="btnSecondary">#457AFF</color>
     <color name="loginBackground">#85C03C</color>
     <color name="loginEditTextBg">#4BFFFFFF</color>
 
@@ -14,5 +14,9 @@
 
     <color name="product_card_price">#1DAF00</color>
     <color name="product_card_title">#313131</color>
+
+    <color name="counter_bg">#70628EFF</color>
+    <color name="product_total_bg">#01579B</color>
+
 
 </resources>

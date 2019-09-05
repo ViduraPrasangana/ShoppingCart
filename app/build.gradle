@@ -5,11 +5,12 @@ android {
     buildToolsVersion "29.0.0"
     defaultConfig {
         applicationId "com.ayesha.shoppingcart"
-        minSdkVersion 17
+        minSdkVersion 18
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -28,7 +29,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 
-
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.android.material:material:1.1.0-alpha09'
 
     //BlurEffect
@@ -48,7 +49,11 @@ dependencies {
     //Round ImageView
     implementation 'de.hdodenhof:circleimageview:3.0.1'
 
+    //Image loader
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
+    //Counter
+    implementation 'com.github.ViduraPrasangana:NumberSlidingPicker:1.2.1'
 
 
 }

@@ -3,7 +3,7 @@ package com.ayesha.shoppingcart;
 import androidx.fragment.app.Fragment;
 
 enum MainScreen {
-    HOME(new HomeFragment()),
+    HOME(HomeFragment.getInstance()),
     CATEGORY(new CategoryFragment()),
     CART(new CartFragment()),
     ACCOUNT(new AccountFragment());

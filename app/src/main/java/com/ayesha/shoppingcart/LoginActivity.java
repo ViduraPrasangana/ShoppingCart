@@ -1,17 +1,21 @@
 package com.ayesha.shoppingcart;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.jgabrielfreitas.core.BlurImageView;
 
@@ -30,6 +34,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_layout);
         bg = findViewById(R.id.bg);
         bg.setBlur(1.5f);
+
+        auth = FirebaseAuth.getInstance();
+        checkUser(auth);
 
         email = findViewById(R.id.email);
         emailCon = findViewById(R.id.linearLayout);
@@ -66,10 +73,36 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(registerIntent, option.toBundle());
     }
 
+    public void checkUser(FirebaseAuth auth){
+        if(auth.getCurrentUser()!=null) openMain();
+    }
+
     private void login(){
-        openMain();
+        if(validate()){
+            auth.signInWithEmailAndPassword(email.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        auth = FirebaseAuth.getInstance();
+                        checkUser(auth);
+                    }else {
+                        Constants.showSnack(btnLogin,"Login Failed");
+                    }
+                }
+            });
+        } else {
+            Constants.showSnack(btnLogin,"Fill all fields");
+        }
     }
     public void openMain(){
         startActivity(new Intent(this,MainActivity.class));
+        finish();
+    }
+
+    public boolean validate(){
+        return email.getText() != null &&
+                !email.getText().toString().equals("") &&
+                password.getText() != null &&
+                !password.getText().toString().equals("");
     }
 }
