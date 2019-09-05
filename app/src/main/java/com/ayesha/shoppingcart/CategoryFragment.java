@@ -45,6 +45,5 @@ public class CategoryFragment extends Fragment {
         RecyclerViewAdapterCategory adapter = new RecyclerViewAdapterCategory(getActivity(),categories);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //This is a temp Comment!
     }
 }
