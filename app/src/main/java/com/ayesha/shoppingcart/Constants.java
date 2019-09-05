@@ -7,12 +7,21 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 class Constants {
-    public final static int RANDOM_PRODUCTS_COUNT = 6;
+    private static DatabaseReference dbRef;
+    static ArrayList<Product> allProducts;
+    final static int RANDOM_PRODUCTS_COUNT = 6;
 
     static Category frozenFood = new Category(0,R.mipmap.category_frozen_food,"Frozen Food");
     static Category grocery = new Category(0,R.mipmap.category_grocery,"Grocery Items");
@@ -39,6 +48,28 @@ class Constants {
 
         return categories;
     }
+
+
+    public static void fetchProductsFromDB(final MainActivity activity){
+        dbRef = FirebaseDatabase.getInstance().getReference("products/");
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                allProducts = new ArrayList<>();
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    allProducts.add(data.getValue(Product.class));
+                }
+                HomeFragment.homeFragment.loadRandomProducts();
+                activity.dialogDismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+
 
     static void showToast(Context context, String text){
         Toast.makeText(context,text,Toast.LENGTH_SHORT).show();

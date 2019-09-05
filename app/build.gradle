@@ -55,6 +55,8 @@ dependencies {
     //Counter
     implementation 'com.github.ViduraPrasangana:NumberSlidingPicker:1.2.1'
 
+    //Progress
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
 
 }
 
