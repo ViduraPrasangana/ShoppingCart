@@ -44,6 +44,7 @@
             android:layout_width="414dp"
             android:layout_height="652dp"
             android:scrollbars="vertical"
+            android:overScrollMode="never"
             android:clipToPadding="false"
             android:paddingBottom="130dp"
             app:layout_constraintBottom_toBottomOf="parent"
