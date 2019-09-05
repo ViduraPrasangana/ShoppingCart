@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 class Constants {
+    public final static int RANDOM_PRODUCTS_COUNT = 6;
 
     static Category frozenFood = new Category(0,R.mipmap.category_frozen_food,"Frozen Food");
     static Category grocery = new Category(0,R.mipmap.category_grocery,"Grocery Items");

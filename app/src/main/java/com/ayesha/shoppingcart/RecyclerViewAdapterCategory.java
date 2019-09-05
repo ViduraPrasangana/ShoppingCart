@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerVi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_recylcer_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_category, parent, false);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -38,12 +38,14 @@ public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerVi
         final Category tempCategory = categories.get(position); //This will hold the relevent Category object for the relevent Recyclcer View
         holder.image.setImageResource(tempCategory.getImage());
         holder.name.setText(tempCategory.getName());
+        holder.name.setSelected(true);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Constants.showToast(context,tempCategory.getName());
             }
         });
+
     }
 
     @Override
@@ -55,7 +57,7 @@ public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder{
         private CircleImageView image;
         private TextView name;
-        private ConstraintLayout layout;
+        private MaterialCardView layout;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -63,6 +65,7 @@ public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerVi
             image = itemView.findViewById(R.id.categoryImage);
             name = itemView.findViewById(R.id.categoryName);
             layout = itemView.findViewById(R.id.categoryRecyclerLayout);
+
         }
     }
 }

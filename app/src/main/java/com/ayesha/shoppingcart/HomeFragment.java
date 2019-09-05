@@ -21,17 +21,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
-    private AdapterProducts adpter;
+    private AdapterProducts adapter;
     private Context context;
     private ArrayList<Product> productsList;
     private DatabaseReference dbRef;
     private ImageView logo;
     private Toolbar toolbar;
-
-    private static HomeFragment instance;
 
     @Nullable
     @Override
@@ -49,18 +48,16 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void fetchProductsFromDB(){
+    private void fetchProductsFromDB(){
         dbRef = FirebaseDatabase.getInstance().getReference("products/");
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Product> products = new ArrayList<>();
-
                 for(DataSnapshot data: dataSnapshot.getChildren()){
-                    System.out.println(data.toString());
                     products.add(data.getValue(Product.class));
                 }
-                updateRecyclerView(products);
+                updateRecyclerView(getRandomProducts(products));
             }
 
             @Override
@@ -70,14 +67,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateRecyclerView(ArrayList<Product> products){
-        adpter = new AdapterProducts(products,context);
-        recyclerView.setAdapter(adpter);
+        adapter = new AdapterProducts(products,context);
+        recyclerView.setAdapter(adapter);
     }
 
-    public static HomeFragment getInstance(){
-        if(instance==null){
-            instance = new HomeFragment();
-        }
-        return instance;
+    private ArrayList<Product> getRandomProducts(ArrayList<Product> products){
+        ArrayList<Product> shuffledProducts = new ArrayList<>(products);
+        Collections.shuffle(shuffledProducts);
+        return new ArrayList<>(shuffledProducts.subList(0,Constants.RANDOM_PRODUCTS_COUNT));
     }
 }
