@@ -1,6 +1,8 @@
 package com.ayesha.shoppingcart;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
@@ -42,6 +44,26 @@ class Constants {
     }
     static void showSnack(View view,String text){
         Snackbar.make(view,text,Snackbar.LENGTH_SHORT).show();
+    }
+    static void showRedSnack(View view,String text){
+        Snackbar snackbar;
+        snackbar = Snackbar.make(view,text,Snackbar.LENGTH_SHORT);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(0x00FF7F7F);
+        snackbar.show();
+
+    }
+    static void showAlertBox(Context context, String title, String message){
+        new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
     static void openMain(Context context){
         Intent intent = new Intent(context,MainActivity.class);

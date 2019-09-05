@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:scrollbars="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#3E38B116">
+        android:background="#3E38B116"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -17,7 +19,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:scrollbars="vertical">
 
             <TextView
                 android:id="@+id/number"
@@ -95,6 +98,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/number" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEdit"
+                android:layout_width="@dimen/loginButtonWidthPri"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="64dp"
+                android:background="@color/btnPrimary"
+                android:shadowRadius="0"
+                android:text="EDIT"
+                android:transitionName="register"
+                app:layout_constraintEnd_toStartOf="@+id/btnSave"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addr" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="78dp"
+                android:layout_height="51dp"
+                android:layout_marginTop="64dp"
+                android:backgroundTint="@color/btnSecondary"
+                android:enabled="false"
+                android:text="SAVE"
+                android:transitionName="login"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnEdit"
+                app:layout_constraintTop_toBottomOf="@+id/addr" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="328dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="38dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="45dp"
+                android:background="@color/btnPrimary"
+                android:shadowRadius="0"
+                android:text="LOGOUT"
+                android:transitionName="register"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/firstNameEdit"
                 style="@style/Widget.AppCompat.EditText"
@@ -168,34 +214,6 @@
                 app:layout_constraintHorizontal_bias="0.518"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/numberEdit" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEdit"
-                android:layout_width="@dimen/loginButtonWidthPri"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:background="@color/btnPrimary"
-                android:shadowRadius="0"
-                android:text="EDIT"
-                android:transitionName="register"
-                app:layout_constraintEnd_toStartOf="@+id/btnSave"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addr" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSave"
-                android:layout_width="78dp"
-                android:layout_height="51dp"
-                android:layout_marginTop="64dp"
-                android:backgroundTint="@color/btnSecondary"
-                android:enabled="false"
-                android:text="SAVE"
-                android:transitionName="login"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnEdit"
-                app:layout_constraintTop_toBottomOf="@+id/addr" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/categoryImage"
