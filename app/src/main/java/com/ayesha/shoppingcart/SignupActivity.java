@@ -40,15 +40,15 @@ public class SignupActivity extends AppCompatActivity {
         firstName = findViewById(R.id.firstName);
         lastName = findViewById(R.id.lastName);
         number = findViewById(R.id.number);
-        address = findViewById(R.id.address);
+        address = findViewById(R.id.firstNameEdit);
         password = findViewById(R.id.password);
         passwordConfirm = findViewById(R.id.passwordConfirm);
 
         if (auth.getCurrentUser() != null) Constants.openMain(context);
 
-        btnSignup = findViewById(R.id.btnRegister);
+        btnSignup = findViewById(R.id.btnEdit);
         reset = findViewById(R.id.reset);
-        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin = findViewById(R.id.btnSave);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -112,7 +112,7 @@
         android:padding="7dp"
         android:clipToPadding="false">
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnSave"
             android:transitionName="login"
             android:layout_width="@dimen/loginButtonWidthPri"
             android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             android:background="@color/btnPrimary"
             android:text="Login"/>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRegister"
+            android:id="@+id/btnEdit"
             android:transitionName="register"
             android:lines="1"
             android:layout_width="@dimen/registerButtonWidthSec"
