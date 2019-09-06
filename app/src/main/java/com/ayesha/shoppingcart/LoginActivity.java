@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +95,8 @@ public class LoginActivity extends AppCompatActivity {
             Constants.showSnack(btnLogin,"Fill all fields");
         }
     }
+
+
     public void openMain(){
         startActivity(new Intent(this,MainActivity.class));
         finish();

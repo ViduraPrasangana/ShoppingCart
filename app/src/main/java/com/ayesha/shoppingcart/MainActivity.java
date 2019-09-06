@@ -24,14 +24,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private ViewPager viewPager;
     private Context context;
 
+    private static MainActivity mainActivity;
+
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
+
+    private static LoadingDialog loadingDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         context = this;
+        mainActivity = this;
+        loadingDialog = new LoadingDialog(this);
         auth = FirebaseAuth.getInstance();
         setupImageLoader();
         checkUser();
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         });
         viewPager.setOffscreenPageLimit(4);
+        loadAllProducts();
     }
 
     private void checkUser() {
@@ -86,6 +94,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             openLogin();
             finish();
         }
+    }
+
+    public static void loadAllProducts(){
+        loadingDialog.showDialog();
+        Constants.fetchProductsFromDB(mainActivity);
+    }
+
+    public static void dialogDismiss(){
+        loadingDialog.closeDialog();
     }
 
     @Override

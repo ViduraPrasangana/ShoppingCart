@@ -18,5 +18,6 @@
     <color name="counter_bg">#70628EFF</color>
     <color name="product_total_bg">#01579B</color>
 
+    <color name="loading_dialog">#C9000000</color>
 
 </resources>
