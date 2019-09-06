@@ -10,17 +10,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#3E38B116"
-        >
+        android:background="#3E16B19A">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:scrollbars="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scrollbars="vertical">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/number"
@@ -178,7 +177,7 @@
                 android:layout_marginStart="69dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="69dp"
-                android:hint="email"
+                android:hint="Email"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.518"
@@ -193,7 +192,7 @@
                 android:layout_marginStart="69dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="69dp"
-                android:hint="contact no."
+                android:hint="Contact no."
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.481"
@@ -222,7 +221,7 @@
                 android:layout_marginStart="155dp"
                 android:layout_marginTop="36dp"
                 android:layout_marginEnd="155dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/logo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
