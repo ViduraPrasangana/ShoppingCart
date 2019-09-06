@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 class Constants {
     private static DatabaseReference dbRef;
     static ArrayList<Product> allProducts;
+    static User user;
     final static int RANDOM_PRODUCTS_COUNT = 6;
 
     static Category frozenFood = new Category(0,R.mipmap.category_frozen_food,"Frozen Food");
@@ -47,6 +49,27 @@ class Constants {
         //categories.add(chilled2);
 
         return categories;
+    }
+
+    public static void fetchTheCurrentUser(){
+        dbRef = FirebaseDatabase.getInstance().getReference("users/");
+        dbRef.orderByChild("email").equalTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<User> users = new ArrayList<>();
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    users.add(data.getValue(User.class));
+                }
+                user = users.get(0);
+                AccountFragment.user = user;
+                //HomeFragment.homeFragment.loadRandomProducts();
+                //activity.dialogDismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
 

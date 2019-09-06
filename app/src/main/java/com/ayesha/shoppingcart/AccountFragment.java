@@ -2,7 +2,9 @@ package com.ayesha.shoppingcart;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,21 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Document;
+
+import java.util.ArrayList;
 
 public class AccountFragment extends Fragment {
 
-    private User user; //User object that will show
-
+    public static User user ; //User object that will show
     private TextView firstName;
     private TextView lastName;
     private TextView email;
@@ -36,14 +48,28 @@ public class AccountFragment extends Fragment {
     private MaterialButton btnSave;
     private MaterialButton btnLogout;
 
+    public static AccountFragment accountFragment;
+
+
+    @Override
+    public void onStart() {
+
+        super.onStart();
+        //Constants.fetchTheCurrentUser();
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.account_fragment,container,false);
 
-        //Finding components from the view
+
+        accountFragment = this;
         firstName = view.findViewById(R.id.firstName);
+        //firstName.setText(user.getEmail()+"assasaasa");
+        //Log.d("HIIIiiIIIIII",this.user.getEmail());
         lastName = view.findViewById(R.id.lastName);
         email = view.findViewById(R.id.email);
         number = view.findViewById(R.id.number);
@@ -58,14 +84,63 @@ public class AccountFragment extends Fragment {
         btnEdit = view.findViewById(R.id.btnEdit);
         btnSave = view.findViewById(R.id.btnSave);
         btnLogout = view.findViewById(R.id.btnLogout);
+
+        setUser();
+
+        user = new User(addr.getText().toString(),email.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),number.getText().toString());
         //------------------------------//
 
         this.btnEditListner(); //btnEdit onClickListner
         this.btnSaveListner(); //btnSave onClickListner
+        this.btnLogoutListener(); //btnLogout onClickListner
 
         return view;
 
     }
+
+    void loadUser(){
+        this.user = Constants.user;
+    }
+
+    static void setUser(){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/");
+        userRef.orderByChild("email").equalTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<User> tempUser = new ArrayList<>();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    if(snapshot.getValue(User.class)!=null) {
+                        tempUser.add(snapshot.getValue(User.class));
+                    }
+                }
+                //AccountFragment.this.setUser(userTemp);
+                user = tempUser.get(0);
+                AccountFragment.accountFragment.firstName.setText(user.getFirstName());
+                AccountFragment.accountFragment.lastName.setText(user.getLastName());
+                AccountFragment.accountFragment.email.setText(user.getEmail());
+                AccountFragment.accountFragment.number.setText(user.getNumber());
+                AccountFragment.accountFragment.addr.setText(user.getAddress());
+
+                AccountFragment.accountFragment.firstNameEdit.setText(user.getFirstName());
+                AccountFragment.accountFragment.lastNameEdit.setText(user.getLastName());
+                AccountFragment.accountFragment.emailEdit.setText(user.getEmail());
+                AccountFragment.accountFragment.numberEdit.setText(user.getNumber());
+                AccountFragment.accountFragment.addrEdit.setText(user.getAddress());
+
+                Log.d("HIIIIIIIII",user.getEmail());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Constants.showAlertBox(AccountFragment.accountFragment.getActivity(),"Database Error!","There is a database Error \n Plaese Check Your Internet Connection and Try Again!");
+            }
+        });
+    }
+
+//    private static void setUser(User user){
+//        AccountFragment.user = user;
+//    }
 
     private void btnEditListner(){
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -101,12 +176,16 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
 
                 boolean temp = AccountFragment.this.formCheck();
+                Log.d("HIIIIIIIIII",Boolean.toString(temp));
 
                 if(temp){
-
+                    Log.d("HIIIIIIIIII22222",btnSave.toString());
                 }
 
-                else if((temp)){
+                else if(!(temp)){
+
+                    Log.d("HIIIIIIIIII333333333",btnSave.toString());
+
                     //Change the btnEdit to enable
                     btnEdit.setEnabled(true);
                     btnEdit.setEnabled(true);
@@ -129,6 +208,10 @@ public class AccountFragment extends Fragment {
                     numberEdit.setVisibility(View.INVISIBLE);
                     addrEdit.setVisibility(View.INVISIBLE);
 
+                    updateUser(firstNameEdit.getText().toString(),lastNameEdit.getText().toString(),emailEdit.getText().toString(),numberEdit.getText().toString(),addrEdit.getText().toString());
+
+                    //String firstName, String lastName, String email, String number, String addr
+
                     //This is a simple Toast Message
                     Constants.showToast(getActivity(),"SAVED");
                 }
@@ -138,13 +221,30 @@ public class AccountFragment extends Fragment {
         });
     }
 
-    private void btnLoginListener(){
+    private void btnLogoutListener(){
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getActivity(),LoginActivity.class));
+                Constants.showToast(getActivity(),"Logout Successfull!");
 
             }
         });
+    }
+
+    private void updateUser(String firstName, String lastName, String email, String number, String addr) {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users/").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setNumber(number);
+        user.setAddress(addr);
+
+        dbRef.setValue(user);
+
+        setUser();
     }
 
     private boolean formCheck(){
@@ -164,7 +264,7 @@ public class AccountFragment extends Fragment {
             return true;
         }
 
-        else if((numberEdit.getText().length()!=10) || (Patterns.PHONE.matcher(numberEdit.getText()).matches()  )){
+        else if(numberEdit.getText().length()!=10){
             Constants.showAlertBox(getActivity(),"INVALD PHONE NUMBER!","ENTER A VALID PHONE NUMBER!");
             return true;
         }

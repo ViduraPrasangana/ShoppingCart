@@ -7,7 +7,9 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class User  {
      private String email, firstName, lastName, number, address;
 
-     public User(String email, String firstName, String lastName, String number, String address) {
+     public User(){}
+
+     public User(String address, String email, String firstName, String lastName, String number) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
