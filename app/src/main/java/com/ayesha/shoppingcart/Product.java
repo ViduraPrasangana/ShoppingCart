@@ -12,7 +12,7 @@ public class Product {
     private int quantity;
 
     public Product() {
-
+        this.quantity = 1;
     }
 
     public Product(int id, String name, String description, String image_url, double price) {
@@ -21,6 +21,7 @@ public class Product {
 //        this.description = description;
         this.image_url = image_url;
         this.price = price;
+        this.quantity = 1;
     }
 
     public int getId() {
