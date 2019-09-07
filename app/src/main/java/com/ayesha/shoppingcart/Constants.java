@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 class Constants {
     private static DatabaseReference dbRef;
     static ArrayList<Product> allProducts;
+    static ArrayList<Product> allProducts2;
     static User user;
     final static int RANDOM_PRODUCTS_COUNT = 6;
 
@@ -84,6 +86,34 @@ class Constants {
                 }
                 HomeFragment.homeFragment.loadRandomProducts();
                 activity.dialogDismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public static void fetchProductsFromDB2(View view){
+        dbRef = FirebaseDatabase.getInstance().getReference("products/");
+        final View view1 = view;
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                allProducts2 = new ArrayList<>();
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    allProducts2.add(data.getValue(Product.class));
+                    //CartFragment.productCart.add(data.getValue(Product.class));
+                }
+
+                CartFragment.cartFragment.initRecycleView(view1, allProducts2);
+
+                Log.d("Haaaaaaaaaa2",Integer.toString(allProducts2.size()));
+                CartFragment.cartFragment.setProductCart();
+                Log.d("Haaaaaaaaaa3",Integer.toString(CartFragment.productCart.size()));
+
+                //HomeFragment.homeFragment.loadRandomProducts();
+                //activity.dialogDismiss();
             }
 
             @Override

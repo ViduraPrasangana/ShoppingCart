@@ -186,7 +186,7 @@ public class AccountFragment extends Fragment {
 
                     //Change the btnEdit to enable
                     btnEdit.setEnabled(true);
-                    btnEdit.setEnabled(true);
+                    btnLogout.setEnabled(true);
 
                     //Change the btnSave to disable
                     btnSave.setEnabled(false);
