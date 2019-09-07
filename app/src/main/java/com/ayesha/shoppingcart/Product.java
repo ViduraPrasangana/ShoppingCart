@@ -9,6 +9,7 @@ public class Product {
     //            description,
     image_url;
     private double price;
+    private int quantity;
 
     public Product() {
 
@@ -60,5 +61,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }
