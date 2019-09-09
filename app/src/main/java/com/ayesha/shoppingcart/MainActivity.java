@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private ViewPager viewPager;
     private Context context;
 
-    private static MainActivity mainActivity;
+    public static MainActivity mainActivity;
 
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -87,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         });
         viewPager.setOffscreenPageLimit(4);
         loadAllProducts();
+    }
+
+    public void setPage(int page){
+        viewPager.setCurrentItem(page);
     }
 
     private void checkUser() {
