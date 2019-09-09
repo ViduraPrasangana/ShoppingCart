@@ -1,6 +1,7 @@
 package com.ayesha.shoppingcart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +16,12 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerViewAdapterCategory.ViewHolder>{
+public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHolder> {
 
     private ArrayList<Category> categories;
     private Context context;
 
-    public RecyclerViewAdapterCategory(Context context,ArrayList<Category> categories) {
+    public AdapterCategory(Context context, ArrayList<Category> categories) {
         this.categories = categories;
         this.context = context;
     }
@@ -42,7 +43,11 @@ public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerVi
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Constants.showToast(context,tempCategory.getName());
+                Constants.showToast(context, tempCategory.getName());
+
+                Intent intent = new Intent(context, CategoryActivity.class);
+                context.startActivity(intent);
+
             }
         });
 
@@ -54,7 +59,7 @@ public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerVi
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private CircleImageView image;
         private TextView name;
         private MaterialCardView layout;
@@ -65,7 +70,6 @@ public class RecyclerViewAdapterCategory extends RecyclerView.Adapter<RecyclerVi
             image = itemView.findViewById(R.id.categoryImage);
             name = itemView.findViewById(R.id.categoryName);
             layout = itemView.findViewById(R.id.categoryRecyclerLayout);
-
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.ayesha.shoppingcart;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +42,10 @@ public class CategoryFragment extends Fragment {
 
     void initRecycleView(View view){
         RecyclerView recyclerView = view.findViewById(R.id.categoryRecyclerLayout);
-        RecyclerViewAdapterCategory adapter = new RecyclerViewAdapterCategory(getActivity(),categories);
+        AdapterCategory adapter = new AdapterCategory(getActivity(),categories);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
     }
+
 }
