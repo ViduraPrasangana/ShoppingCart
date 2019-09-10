@@ -12,12 +12,16 @@ package com.ayesha.shoppingcart;
 
 public class Category {
 
-    private int id, image;
-    private String name;
+    private int id;
+    private String name,image_url;
 
-    public Category(int id, int image, String name) {
+    public Category(){
+
+    }
+
+    public Category(int id, String image, String name) {
         this.id = id;
-        this.image = image;
+        this.image_url = image;
         this.name = name;
     }
 
@@ -29,12 +33,12 @@ public class Category {
         this.id = id;
     }
 
-    public int getImage() {
-        return image;
+    public String getImage_url() {
+        return image_url;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getName() {

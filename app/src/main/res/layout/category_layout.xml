@@ -34,11 +34,11 @@
                 android:ellipsize="marquee"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
-                android:text="Category"
+                android:text="category"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="30sp"
-                android:transitionName="title" />
+                android:transitionName="category" />
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
 

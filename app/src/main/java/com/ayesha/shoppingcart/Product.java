@@ -64,5 +64,11 @@ public class Product {
         this.price = price;
     }
 
+    public int getCategory() {
+        return category;
+    }
 
+    public void setCategory(int category) {
+        this.category = category;
+    }
 }

@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static void loadAllProducts(){
         loadingDialog.showDialog();
         Constants.fetchProductsFromDB(mainActivity);
+        Constants.fetchAllCategoriesFromDB(mainActivity);
     }
 
     public static void dialogDismiss(){

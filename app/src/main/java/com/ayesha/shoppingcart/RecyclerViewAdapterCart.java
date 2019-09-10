@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.card.MaterialCardView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -46,7 +45,7 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
                 holder.image, options);
         holder.name.setText(tempProduct.getName());
         holder.price.setText(Double.toString(tempProduct.getPrice()));
-        holder.quantity.setText(Integer.toString(tempProduct.getQuantity()));
+//        holder.quantity.setText(Integer.toString(tempProduct.getQuantity()));
 
     }
 
