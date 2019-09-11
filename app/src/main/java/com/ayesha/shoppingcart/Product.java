@@ -9,19 +9,19 @@ public class Product {
     //            description,
     image_url;
     private double price;
-    private int quantity;
+    private int category;
 
     public Product() {
-        this.quantity = 1;
+
     }
 
-    public Product(int id, String name, String description, String image_url, double price) {
+    public Product(int id, String name, String description, String image_url, double price,int category) {
         this.id = id;
         this.name = name;
 //        this.description = description;
         this.image_url = image_url;
         this.price = price;
-        this.quantity = 1;
+        this.category =category;
     }
 
     public int getId() {
@@ -64,11 +64,11 @@ public class Product {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getCategory() {
+        return category;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCategory(int category) {
+        this.category = category;
     }
 }

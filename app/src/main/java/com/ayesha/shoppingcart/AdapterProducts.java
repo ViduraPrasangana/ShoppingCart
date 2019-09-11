@@ -25,12 +25,14 @@ import java.util.ArrayList;
 public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ProductViewHolder> {
     private ArrayList<Product> productArrayList;
     private Context context;
-    private static ImageView logo;
-    private static Toolbar toolbar;
+    private ImageView logo;
+    private Toolbar toolbar;
 
-    public AdapterProducts(ArrayList<Product> products, Context context) {
+    public AdapterProducts(ArrayList<Product> products, Context context, ImageView imageView, Toolbar toolbarView) {
         productArrayList = products;
         this.context = context;
+        logo = imageView;
+        toolbar = toolbarView;
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
@@ -95,8 +97,4 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.Produc
         return productArrayList.size();
     }
 
-    public static void setViews(ImageView imageView, Toolbar toolbarView) {
-        logo = imageView;
-        toolbar = toolbarView;
-    }
 }

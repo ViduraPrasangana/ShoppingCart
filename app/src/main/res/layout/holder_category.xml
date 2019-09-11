@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="33dp"
             android:textAlignment="center"
+            android:transitionName="category"
             android:text="TextView"
             android:textAllCaps="true"
             android:textSize="24sp"

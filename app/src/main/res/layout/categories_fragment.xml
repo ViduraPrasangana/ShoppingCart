@@ -51,7 +51,7 @@
             android:scrollbars="vertical"
             android:overScrollMode="never"
             android:clipToPadding="false"
-            android:paddingBottom="130dp"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

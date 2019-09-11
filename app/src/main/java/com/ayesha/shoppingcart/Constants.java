@@ -21,39 +21,43 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 class Constants {
-    private static DatabaseReference dbRef;
+
     static ArrayList<Product> allProducts;
+    static ArrayList<Category> allCategories;
     static ArrayList<Product> allProducts2;
     static User user;
     final static int RANDOM_PRODUCTS_COUNT = 6;
 
-    static Category frozenFood = new Category(0,R.mipmap.category_frozen_food,"Frozen Food");
-    static Category grocery = new Category(0,R.mipmap.category_grocery,"Grocery Items");
-    static Category vegetable = new Category(0,R.mipmap.category_vegetable,"Vegetables");
-    static Category fruit = new Category(0,R.mipmap.category_fruit,"Fruits");
-    static Category meat = new Category(0,R.mipmap.category_meat,"Meat");
-    static Category fish = new Category(0,R.mipmap.category_fish,"Fish");
-    static Category liquor = new Category(0,R.mipmap.category_liquor,"Liquor");
-    static Category chilled = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
+//    static Category frozenFood = new Category(0,R.mipmap.category_frozen_food,"Frozen Food");
+//    static Category grocery = new Category(0,R.mipmap.category_grocery,"Grocery Items");
+//    static Category vegetable = new Category(0,R.mipmap.category_vegetable,"Vegetables");
+//    static Category fruit = new Category(0,R.mipmap.category_fruit,"Fruits");
+//    static Category meat = new Category(0,R.mipmap.category_meat,"Meat");
+//    static Category fish = new Category(0,R.mipmap.category_fish,"Fish");
+//    static Category liquor = new Category(0,R.mipmap.category_liquor,"Liquor");
+//    static Category chilled = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
     //static Category chilled2 = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
 
-    static ArrayList<Category> getCategoryArrayList(){
-        ArrayList<Category> categories = new ArrayList<>();
+    static boolean categoriesFetched,productsFetched = false;
 
-        categories.add(frozenFood);
-        categories.add(grocery);
-        categories.add(vegetable);
-        categories.add(fruit);
-        categories.add(meat);
-        categories.add(fish);
-        categories.add(liquor);
-        categories.add(chilled);
-        //categories.add(chilled2);
-
-        return categories;
-    }
+//    static ArrayList<Category> getCategoryArrayList(){
+//        ArrayList<Category> categories = new ArrayList<>();
+//
+//        categories.add(frozenFood);
+//        categories.add(grocery);
+//        categories.add(vegetable);
+//        categories.add(fruit);
+//        categories.add(meat);
+//        categories.add(fish);
+//        categories.add(liquor);
+//        categories.add(chilled);
+//        //categories.add(chilled2);
+//
+//        return categories;
+//    }
 
     public static void fetchTheCurrentUser(){
+        DatabaseReference dbRef;
         dbRef = FirebaseDatabase.getInstance().getReference("users/");
         dbRef.orderByChild("email").equalTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -76,6 +80,7 @@ class Constants {
 
 
     public static void fetchProductsFromDB(final MainActivity activity){
+        DatabaseReference dbRef;
         dbRef = FirebaseDatabase.getInstance().getReference("products/");
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -85,7 +90,35 @@ class Constants {
                     allProducts.add(data.getValue(Product.class));
                 }
                 HomeFragment.homeFragment.loadRandomProducts();
-                activity.dialogDismiss();
+                productsFetched = true;
+                dialogDismiss(activity);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
+    private static void dialogDismiss(MainActivity activity){
+        if(productsFetched && categoriesFetched){
+            activity.dialogDismiss();
+        }
+    }
+
+    static void fetchAllCategoriesFromDB(final MainActivity activity){
+        DatabaseReference dbRef;
+        dbRef = FirebaseDatabase.getInstance().getReference("categories/");
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                allCategories = new ArrayList<>();
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    allCategories.add(data.getValue(Category.class));
+                }
+                CategoryFragment.categoryFragment.loadCategoriesToView(allCategories);
+                categoriesFetched = true;
+                dialogDismiss(activity);
             }
 
             @Override
@@ -95,6 +128,7 @@ class Constants {
     }
 
     public static void fetchProductsFromDB2(View view){
+        DatabaseReference dbRef;
         dbRef = FirebaseDatabase.getInstance().getReference("products/");
         final View view1 = view;
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {

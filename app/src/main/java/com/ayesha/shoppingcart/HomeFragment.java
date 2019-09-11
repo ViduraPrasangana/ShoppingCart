@@ -66,7 +66,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        AdapterProducts.setViews(logo, toolbar);
         recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 
         return view;
@@ -80,7 +79,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateRecyclerView(ArrayList<Product> products) {
-        adapter = new AdapterProducts(products, context);
+        adapter = new AdapterProducts(products, context, logo,toolbar);
         recyclerView.setAdapter(adapter);
     }
 

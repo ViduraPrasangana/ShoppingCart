@@ -1,29 +1,28 @@
 package com.ayesha.shoppingcart;
 
-import android.accounts.Account;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-//import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+
+//import android.util.Pair;
 
 public class CartFragment extends Fragment {
 
@@ -33,12 +32,13 @@ public class CartFragment extends Fragment {
     private MaterialButton confirm;
     private RecyclerView productRecycleView;
     //private Toolbar toolbar;
+    private Context context;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         CartFragment.cartFragment = this;
-
+        context = requireContext();
         View view =  inflater.inflate(R.layout.cart_fragment,container,false);
 
         this.price = view.findViewById(R.id.price);
@@ -79,7 +79,7 @@ public class CartFragment extends Fragment {
     private double calculateTotalPrice(ArrayList<Product> productCart){
         double tot = 0;
         for(Product product: productCart){
-            tot+=(product.getPrice()*Double.valueOf(product.getQuantity()));
+//            tot+=(product.getPrice()*Double.valueOf(product.getQuantity()));
         }
         return tot;
     }
@@ -94,12 +94,11 @@ public class CartFragment extends Fragment {
                 //Pair<View, String> p4 = Pair.create((View)CartFragment.this.confirm, "confirm");
 
 
-                ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),p1,p2,p1,p2);
+                ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,p1,p2,p1,p2);
                 Intent intent = new Intent(CartFragment.this.getContext(), HolderBill.class);
-                Bundle bundle = new Bundle();
 
                 intent.putExtra("price", CartFragment.this.price.getText());
-                CartFragment.this.getContext().startActivity(intent, option.toBundle());
+                context.startActivity(intent,option.toBundle());
             }
         });
     }
