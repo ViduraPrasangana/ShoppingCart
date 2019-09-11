@@ -123,20 +123,21 @@ public class CartFragment extends Fragment {
                         .setMessage("Please select the type of delivery you want!")
                         .setPositiveButton("Collect Delivery", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Go to the collect Delivery
+                                Intent intent = new Intent(CartFragment.this.getContext(), CollectDeliveryActivity.class);
+                                //intent.putExtra("price", CartFragment.this.price.getText());
+                                context.startActivity(intent);
                             }
                         })
                         .setNeutralButton("Home Delivery", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Go to the Home Delivery
+                                Intent intent = new Intent(CartFragment.this.getContext(), HomeDeliveryActivity.class);
+                                //intent.putExtra("price", CartFragment.this.price.getText());
+                                context.startActivity(intent);
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
 
-//                Intent intent = new Intent(CartFragment.this.getContext(), HolderBill.class);
-//                intent.putExtra("price", CartFragment.this.price.getText());
-//                context.startActivity(intent);
             }
         });
     }
