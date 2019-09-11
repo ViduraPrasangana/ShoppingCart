@@ -1,7 +1,8 @@
 package com.ayesha.shoppingcart;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityOptionsCompat;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -115,18 +114,27 @@ public class CartFragment extends Fragment {
         this.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Pair<View, String> p1 = Pair.create((View)CartFragment.this.productRecycleView,"recycleView");
-                Pair<View, String> p2 = Pair.create((View)CartFragment.this.confirm, "confirm");
-                //Pair<View, String> p3 = Pair.create((View)CartFragment.this.productRecycleView,"recycleView");
-                //Pair<View, String> p4 = Pair.create((View)CartFragment.this.confirm, "confirm");
 
+                new AlertDialog.Builder(context)
+                        .setTitle("Type of the delivery!")
+                        .setMessage("Please select the type of delivery you want!")
+                        .setPositiveButton("Collect Delivery", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(CartFragment.this.getContext(), CollectDeliveryActivity.class);
+                                intent.putExtra("price", CartFragment.this.price.getText());
+                                context.startActivity(intent);
+                            }
+                        })
+                        .setNeutralButton("Home Delivery", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(CartFragment.this.getContext(), HomeDeliveryActivity.class);
+                                //intent.putExtra("price", CartFragment.this.price.getText());
+                                context.startActivity(intent);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
 
-                ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,p1,p2,p1,p2);
-                Intent intent = new Intent(CartFragment.this.getContext(), HolderBill.class);
-                //Bundle bundle = new Bundle();
-
-                intent.putExtra("price", CartFragment.this.price.getText());
-                context.startActivity(intent,option.toBundle());
             }
         });
     }
