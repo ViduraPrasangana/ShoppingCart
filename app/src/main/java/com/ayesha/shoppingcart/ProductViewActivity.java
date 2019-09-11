@@ -71,8 +71,8 @@ public class ProductViewActivity extends AppCompatActivity {
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("carts/"+ FirebaseAuth.getInstance().getUid());
                 ref.child(String.valueOf(id)).setValue(new CartItem(id,quantity,quantity*price));
 
-                MainActivity.mainActivity.setPage(0);
-                finish();
+//                MainActivity.mainActivity.setPage(0);
+//                finish();
             }
         });
 

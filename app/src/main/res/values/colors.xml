@@ -20,4 +20,14 @@
 
     <color name="loading_dialog">#C9000000</color>
 
+    <color name="wish_btn_normal_icon">#fff</color>
+    <color name="wish_btn_normal">#E1264586</color>
+    <color name="wish_btn_checked">#F51B9B3E</color>
+
+    <color name="wishlist_remove_all">#FF0808</color>
+    <color name="wishlist_add_to_cart_all">#0059B8</color>
+
+    <color name="cart_remove_btn">#FF0808</color>
+
+
 </resources>

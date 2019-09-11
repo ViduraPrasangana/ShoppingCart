@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 class Constants {
 
@@ -27,35 +28,11 @@ class Constants {
     static ArrayList<Product> allProducts2;
     static ArrayList<CartItem> cartItems;
     static User user;
-    final static int RANDOM_PRODUCTS_COUNT = 6;
+    final static int RANDOM_PRODUCTS_COUNT = 9;
 
-//    static Category frozenFood = new Category(0,R.mipmap.category_frozen_food,"Frozen Food");
-//    static Category grocery = new Category(0,R.mipmap.category_grocery,"Grocery Items");
-//    static Category vegetable = new Category(0,R.mipmap.category_vegetable,"Vegetables");
-//    static Category fruit = new Category(0,R.mipmap.category_fruit,"Fruits");
-//    static Category meat = new Category(0,R.mipmap.category_meat,"Meat");
-//    static Category fish = new Category(0,R.mipmap.category_fish,"Fish");
-//    static Category liquor = new Category(0,R.mipmap.category_liquor,"Liquor");
-//    static Category chilled = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
-    //static Category chilled2 = new Category(0,R.mipmap.category_chilled,"Chilled Food Items");
+    static ArrayList<Product> wishList;
 
-    static boolean categoriesFetched,productsFetched = false;
-
-//    static ArrayList<Category> getCategoryArrayList(){
-//        ArrayList<Category> categories = new ArrayList<>();
-//
-//        categories.add(frozenFood);
-//        categories.add(grocery);
-//        categories.add(vegetable);
-//        categories.add(fruit);
-//        categories.add(meat);
-//        categories.add(fish);
-//        categories.add(liquor);
-//        categories.add(chilled);
-//        //categories.add(chilled2);
-//
-//        return categories;
-//    }
+    static boolean categoriesFetched,productsFetched, wishlistFetched, cartFetched = false;
 
     public static void fetchTheCurrentUser(){
         DatabaseReference dbRef;
@@ -98,7 +75,7 @@ class Constants {
     }
 
     private static void dialogDismiss(MainActivity activity){
-        if(productsFetched && categoriesFetched){
+        if(productsFetched && categoriesFetched && wishlistFetched && cartFetched){
             activity.dialogDismiss();
         }
     }
@@ -124,28 +101,24 @@ class Constants {
         });
     }
 
-    public static void fetchCartItemsFromDB(View view){
+    public static void fetchCartItemsFromDB(final MainActivity mainActivity){
         DatabaseReference dbRef;
         dbRef = FirebaseDatabase.getInstance().getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/");
-        //"users/"+FirebaseAuth.getInstance().getUid() + "/"
-        final View view1 = view;
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 cartItems = new ArrayList<>();
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     cartItems.add(data.getValue(CartItem.class));
-                    //CartFragment.productCart.add(data.getValue(Product.class));
                 }
-
-                CartFragment.cartFragment.initRecycleView(view1, cartItems);
-
-                Log.d("Haaaaaaaaaa2",Integer.toString(cartItems.size()));
-                CartFragment.cartFragment.setProductCart();
-                Log.d("Haaaaaaaaaa3",Integer.toString(CartFragment.productCart.size()));
-
-                //HomeFragment.homeFragment.loadRandomProducts();
-                //activity.dialogDismiss();
+                cartFetched = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        CartFragment.cartFragment.initRecycleView(cartItems);
+                    }
+                },1000);
+                dialogDismiss(mainActivity);
             }
 
             @Override
@@ -185,5 +158,59 @@ class Constants {
     static void openMain(Context context){
         Intent intent = new Intent(context,MainActivity.class);
         context.startActivity(intent);
+    }
+
+    static void addToWishList(int product_id){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("wishlists/"+FirebaseAuth.getInstance().getUid());
+        ref.child(String.valueOf(product_id)).setValue(new WishItem(product_id));
+        wishList.add(findProductFromAll(product_id));
+    }
+
+    static void removeFromWishList(Product product){
+        wishList.remove(product);
+        removeFromWishList(product.getId());
+    }
+    static void removeFromWishList(int product_id){
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("wishlists/"+FirebaseAuth.getInstance().getUid());
+        ref.child(String.valueOf(product_id)).removeValue();
+    }
+    static boolean isInWishList(int product_id){
+        for(Product product : wishList){
+            if(product.getId()==product_id){
+                return true;
+            }
+        }
+        return false;
+    }
+    static Product findProductFromAll(int product_id){
+        for(Product product: allProducts){
+            if(product.getId()==product_id){
+                return product;
+            }
+        }
+        return null;
+    }
+    static void fetchWishListFromDB(final MainActivity activity){
+        wishList = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("wishlists/"+FirebaseAuth.getInstance().getUid());
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                wishList = new ArrayList<>();
+                for (DataSnapshot data: dataSnapshot.getChildren()){
+                    WishItem item = data.getValue(WishItem.class);
+                    if(item!=null) wishList.add(findProductFromAll(item.getPriduct_id()));
+                }
+                System.out.println(Arrays.deepToString(wishList.toArray()));
+                wishlistFetched=true;
+                dialogDismiss(activity);
+                if(WishFragment.wishFragment!=null) WishFragment.wishFragment.loadWishProducts();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
