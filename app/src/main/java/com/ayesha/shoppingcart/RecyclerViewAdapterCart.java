@@ -1,15 +1,20 @@
 package com.ayesha.shoppingcart;
 
 import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -19,11 +24,21 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAdapterCart.ViewHolder>{
 
-    private ArrayList<Product> products;
+    private ArrayList<CartItem> cartItems;
     private Context context;
+    private int postiton;
+    private OnItemClickListner clickListner;
 
-    public RecyclerViewAdapterCart(Context context,ArrayList<Product> products) {
-        this.products = products;
+    public interface OnItemClickListner{
+        void onDeleteClick(int position);
+    }
+
+    public void setClickListner(OnItemClickListner clickListner1){
+        clickListner = clickListner1;
+    }
+
+    public RecyclerViewAdapterCart(Context context,ArrayList<CartItem> cartItems) {
+        this.cartItems = cartItems;
         this.context = context;
     }
 
@@ -31,13 +46,26 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_cart_product, parent, false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+//        holder.close.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.cartHolderLayout.setVisibility(View.INVISIBLE);
+//
+//                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("carts/").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Integer.toString(cartItems.get(postiton).getId()));
+//                dbRef.removeValue();
+//
+//                Constants.fetchCartItemsFromDB(view);
+//            }
+//        });
         return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Product tempProduct = products.get(position); //This will hold the relevent Category object for the relevent Recyclcer View
+        this.postiton = position;
+        final CartItem tempCartItem = cartItems.get(position);
+        final Product tempProduct = Constants.allProducts.get(tempCartItem.getId()-1); //This will hold the relevent Category object for the relevent Recyclcer View
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).build();
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(
@@ -45,13 +73,13 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
                 holder.image, options);
         holder.name.setText(tempProduct.getName());
         holder.price.setText(Double.toString(tempProduct.getPrice()));
-//        holder.quantity.setText(Integer.toString(tempProduct.getQuantity()));
+        holder.quantity.setText(Integer.toString(tempCartItem.getQuantity()));
 
     }
 
     @Override
     public int getItemCount() {
-        return products.size();
+        return cartItems.size();
     }
 
 
@@ -61,6 +89,7 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
         private TextView price;
         private TextView quantity;
         private MaterialButton close;
+        private ConstraintLayout cartHolderLayout;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -70,6 +99,23 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
             price = itemView.findViewById(R.id.price);
             quantity = itemView.findViewById(R.id.quantiity);
             close = itemView.findViewById(R.id.close);
+            cartHolderLayout = itemView.findViewById(R.id.cartHolderLayout);
+
+            close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (clickListner != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            clickListner.onDeleteClick(position);
+                        }
+                    }
+
+                }
+            });
+
+
+            name.setSelected(true);
 
         }
     }

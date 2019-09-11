@@ -28,7 +28,7 @@ public class AccountFragment extends Fragment {
 
     public static User user ; //User object that will show
     private TextView firstName;
-    private TextView lastName;
+    //private TextView lastName;
     private TextView email;
     private TextView number;
     private TextView addr;
@@ -65,7 +65,7 @@ public class AccountFragment extends Fragment {
         firstName = view.findViewById(R.id.firstName);
         //firstName.setText(user.getEmail()+"assasaasa");
         //Log.d("HIIIiiIIIIII",this.user.getEmail());
-        lastName = view.findViewById(R.id.lastName);
+        //lastName = view.findViewById(R.id.lastName);
         email = view.findViewById(R.id.email);
         number = view.findViewById(R.id.number);
         addr = view.findViewById(R.id.addr);
@@ -82,7 +82,7 @@ public class AccountFragment extends Fragment {
 
         setUser();
 
-        user = new User(addr.getText().toString(),email.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),number.getText().toString());
+        //user = new User(addr.getText().toString(),email.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),number.getText().toString());
         //------------------------------//
 
         this.btnEditListner(); //btnEdit onClickListner
@@ -98,20 +98,30 @@ public class AccountFragment extends Fragment {
     }
 
     static void setUser(){
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/");
-        userRef.orderByChild("email").equalTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()).addValueEventListener(new ValueEventListener() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/"+FirebaseAuth.getInstance().getUid() + "/");
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<User> tempUser = new ArrayList<>();
+                //ArrayList<User> tempUser = new ArrayList<>();
+                ArrayList<String> userAttributes = new ArrayList<>();
+                User user2 ;
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    if(snapshot.getValue(User.class)!=null) {
-                        tempUser.add(snapshot.getValue(User.class));
+                    Log.d("HI12212121I2I12I12", snapshot.getValue(Object.class).toString());
+                    if(snapshot.getValue(String.class)!=null) {
+                        //user2 = new User((String)snapshot.child("address").getValue(), (String)snapshot.child("email").getValue(),(String)snapshot.child("firstName").getValue(),(String)snapshot.child("lastName").getValue(),(String)snapshot.child("number").getValue());
+                       userAttributes.add(snapshot.getValue(String.class));
+                        // User(String address, String email, String firstName, String lastName, String number)
+                        //tempUser.add(snapshot.getValue(User.class));
+                        //tempUser.add(user2);
                     }
                 }
                 //AccountFragment.this.setUser(userTemp);
-                user = tempUser.get(0);
-                AccountFragment.accountFragment.firstName.setText(user.getFirstName());
-                AccountFragment.accountFragment.lastName.setText(user.getLastName());
+                user = new User(userAttributes.get(0), userAttributes.get(1), userAttributes.get(2), userAttributes.get(3), userAttributes.get(4));
+                Log.d("HI12212121I2I12I12", user.getLastName());
+                Log.d("HI12212121I2I12I12", user.getFirstName());
+                AccountFragment.accountFragment.firstName.setText(user.getFirstName()+" "+user.getLastName());
+               // AccountFragment.accountFragment.lastName.setText(user.getLastName());
+               // AccountFragment.accountFragment.lastName.setText("temp");
                 AccountFragment.accountFragment.email.setText(user.getEmail());
                 AccountFragment.accountFragment.number.setText(user.getNumber());
                 AccountFragment.accountFragment.addr.setText(user.getAddress());
@@ -146,7 +156,7 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
                 //Change the visibility of the TextView to INVISIBLE
                 firstName.setVisibility(View.INVISIBLE);
-                lastName.setVisibility(View.INVISIBLE);
+//                lastName.setVisibility(View.INVISIBLE);
                 email.setVisibility(View.INVISIBLE);
                 number.setVisibility(View.INVISIBLE);
                 addr.setVisibility(View.INVISIBLE);
@@ -194,7 +204,7 @@ public class AccountFragment extends Fragment {
 
                     //Change the visibility of the TextView to VISIBLE
                     firstName.setVisibility(View.VISIBLE);
-                    lastName.setVisibility(View.VISIBLE);
+//                    lastName.setVisibility(View.VISIBLE);
                     email.setVisibility(View.VISIBLE);
                     number.setVisibility(View.VISIBLE);
                     addr.setVisibility(View.VISIBLE);

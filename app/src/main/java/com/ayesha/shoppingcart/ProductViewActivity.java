@@ -70,6 +70,9 @@ public class ProductViewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("carts/"+ FirebaseAuth.getInstance().getUid());
                 ref.child(String.valueOf(id)).setValue(new CartItem(id,quantity,quantity*price));
+
+                MainActivity.mainActivity.setPage(0);
+                finish();
             }
         });
 
