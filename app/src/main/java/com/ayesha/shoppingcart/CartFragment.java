@@ -1,8 +1,11 @@
 package com.ayesha.shoppingcart;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -94,6 +96,27 @@ public class CartFragment extends Fragment {
 
                 intent.putExtra("price", CartFragment.this.price.getText());
                 context.startActivity(intent);
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Type of the delivery!")
+                        .setMessage("Please select the type of delivery you want!")
+                        .setPositiveButton("Collect Delivery", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(CartFragment.this.getContext(), CollectDeliveryActivity.class);
+                                intent.putExtra("price", CartFragment.this.price.getText());
+                                context.startActivity(intent);
+                            }
+                        })
+                        .setNeutralButton("Home Delivery", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(CartFragment.this.getContext(), HomeDeliveryActivity.class);
+                                //intent.putExtra("price", CartFragment.this.price.getText());
+                                context.startActivity(intent);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+
             }
         });
     }

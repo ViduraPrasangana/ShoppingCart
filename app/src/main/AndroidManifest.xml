@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CategoryActivity"/>
+        <activity android:name=".HomeDeliveryActivity"></activity>
+        <activity android:name=".CollectDeliveryActivity" />
+        <activity android:name=".CategoryActivity" />
         <activity android:name=".HolderBill" />
         <activity android:name=".ProductViewActivity" />
         <activity android:name=".MainActivity" />
