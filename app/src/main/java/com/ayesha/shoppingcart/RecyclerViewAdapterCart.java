@@ -71,6 +71,8 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
             quantity = itemView.findViewById(R.id.quantiity);
             close = itemView.findViewById(R.id.close);
 
+            name.setSelected(true);
+
         }
     }
 }

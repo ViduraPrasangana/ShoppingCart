@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#3E16B19A">
+        android:background="#3E16B19A"
+        android:paddingTop="50dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
@@ -40,15 +41,13 @@
                 android:id="@+id/firstName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
                 android:layout_marginTop="54dp"
-                android:layout_marginEnd="55dp"
-                android:text="First name"
-                android:textAllCaps="true"
+                android:text="Name"
+                android:textAllCaps="false"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.52"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/categoryImage" />
 
@@ -56,26 +55,9 @@
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="26dp"
-                android:layout_marginEnd="55dp"
-                android:text="EMAIL"
-                android:textAllCaps="true"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastName" />
-
-            <TextView
-                android:id="@+id/lastName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="26dp"
-                android:layout_marginEnd="55dp"
-                android:text="LAST NAME"
-                android:textAllCaps="true"
+                android:layout_marginTop="24dp"
+                android:text="Email"
+                android:textAllCaps="false"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -218,14 +200,12 @@
                 android:id="@+id/categoryImage"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="155dp"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="155dp"
                 android:src="@drawable/logo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                app:layout_constraintHorizontal_bias="0.5"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

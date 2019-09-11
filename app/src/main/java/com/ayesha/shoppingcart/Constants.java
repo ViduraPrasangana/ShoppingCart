@@ -57,17 +57,12 @@ class Constants {
 //    }
 
     public static void fetchTheCurrentUser(){
-        DatabaseReference dbRef;
-        dbRef = FirebaseDatabase.getInstance().getReference("users/");
-        dbRef.orderByChild("email").equalTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef = FirebaseDatabase.getInstance().getReference("users/"+FirebaseAuth.getInstance().getUid());
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<User> users = new ArrayList<>();
-                for(DataSnapshot data: dataSnapshot.getChildren()){
-                    users.add(data.getValue(User.class));
-                }
-                user = users.get(0);
-                AccountFragment.user = user;
+                User tempUser = dataSnapshot.getValue(User.class);
+                user = tempUser;
                 //HomeFragment.homeFragment.loadRandomProducts();
                 //activity.dialogDismiss();
             }

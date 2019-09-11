@@ -96,6 +96,7 @@ public class CartFragment extends Fragment {
 
                 ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,p1,p2,p1,p2);
                 Intent intent = new Intent(CartFragment.this.getContext(), HolderBill.class);
+                //Bundle bundle = new Bundle();
 
                 intent.putExtra("price", CartFragment.this.price.getText());
                 context.startActivity(intent,option.toBundle());

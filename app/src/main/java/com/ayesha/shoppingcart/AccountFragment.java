@@ -98,8 +98,8 @@ public class AccountFragment extends Fragment {
     }
 
     static void setUser(){
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/");
-        userRef.orderByChild("email").equalTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()).addValueEventListener(new ValueEventListener() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/"+FirebaseAuth.getInstance().getUid());
+        userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<User> tempUser = new ArrayList<>();
