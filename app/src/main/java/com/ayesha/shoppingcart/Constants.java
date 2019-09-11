@@ -25,6 +25,7 @@ class Constants {
     static ArrayList<Product> allProducts;
     static ArrayList<Category> allCategories;
     static ArrayList<Product> allProducts2;
+    static ArrayList<CartItem> cartItems;
     static User user;
     final static int RANDOM_PRODUCTS_COUNT = 6;
 
@@ -57,6 +58,7 @@ class Constants {
 //    }
 
     public static void fetchTheCurrentUser(){
+        DatabaseReference dbRef;
         dbRef = FirebaseDatabase.getInstance().getReference("users/"+FirebaseAuth.getInstance().getUid());
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -122,22 +124,23 @@ class Constants {
         });
     }
 
-    public static void fetchProductsFromDB2(View view){
+    public static void fetchCartItemsFromDB(View view){
         DatabaseReference dbRef;
-        dbRef = FirebaseDatabase.getInstance().getReference("products/");
+        dbRef = FirebaseDatabase.getInstance().getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/");
+        //"users/"+FirebaseAuth.getInstance().getUid() + "/"
         final View view1 = view;
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                allProducts2 = new ArrayList<>();
+                cartItems = new ArrayList<>();
                 for(DataSnapshot data: dataSnapshot.getChildren()){
-                    allProducts2.add(data.getValue(Product.class));
+                    cartItems.add(data.getValue(CartItem.class));
                     //CartFragment.productCart.add(data.getValue(Product.class));
                 }
 
-                CartFragment.cartFragment.initRecycleView(view1, allProducts2);
+                CartFragment.cartFragment.initRecycleView(view1, cartItems);
 
-                Log.d("Haaaaaaaaaa2",Integer.toString(allProducts2.size()));
+                Log.d("Haaaaaaaaaa2",Integer.toString(cartItems.size()));
                 CartFragment.cartFragment.setProductCart();
                 Log.d("Haaaaaaaaaa3",Integer.toString(CartFragment.productCart.size()));
 

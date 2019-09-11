@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -26,8 +29,9 @@ import java.util.ArrayList;
 
 public class CartFragment extends Fragment {
 
-    static ArrayList<Product> productCart = new ArrayList<>();
+    static ArrayList<CartItem> productCart = new ArrayList<>();
     static CartFragment cartFragment;
+    private static View cartView;
     private TextView price;
     private MaterialButton confirm;
     private RecyclerView productRecycleView;
@@ -40,17 +44,25 @@ public class CartFragment extends Fragment {
         CartFragment.cartFragment = this;
         context = requireContext();
         View view =  inflater.inflate(R.layout.cart_fragment,container,false);
-
+        cartView = view;
         this.price = view.findViewById(R.id.price);
         this.confirm = view.findViewById(R.id.confirm);
         this.productRecycleView = view.findViewById(R.id.cartRecyclerView);
         //this.toolbar = view.findViewById(R.id.cartToolbar);
 
-        Constants.fetchProductsFromDB2(view);
+        Constants.fetchCartItemsFromDB(view);
 
         this.confirmOnClickListner();
         //initProducts(view);
         return view;
+    }
+
+    public void onResume() {
+
+        super.onResume();
+        Constants.fetchCartItemsFromDB(cartView);
+
+
     }
 
     private void initProducts(View view){
@@ -62,24 +74,39 @@ public class CartFragment extends Fragment {
     }
 
     void setProductCart(){
-        CartFragment.productCart = Constants.allProducts2;
+        CartFragment.productCart = Constants.cartItems;
     }
 
-    void initRecycleView(View view, ArrayList<Product> productCart){
+    void initRecycleView(View view, final ArrayList<CartItem> productCart){
         CartFragment.productCart = productCart;
         this.price.setText(Double.toString(this.calculateTotalPrice(productCart)));
         RecyclerView recyclerView = view.findViewById(R.id.cartRecyclerView);
-        RecyclerViewAdapterCart adapter = new RecyclerViewAdapterCart(getActivity(),productCart);
+        final RecyclerViewAdapterCart adapter = new RecyclerViewAdapterCart(getActivity(),productCart);
+
+
+        Log.d("SIZEEEEEEEEEEEEE", Integer.toString(productCart.size()));
+        adapter.setClickListner(new RecyclerViewAdapterCart.OnItemClickListner() {
+            @Override
+            public void onDeleteClick(int position) {
+                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("carts/").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Integer.toString(productCart.get(position).getId()));
+                dbRef.removeValue();
+                productCart.remove(position);
+                adapter.notifyItemRemoved(position);
+                price.setText(Double.toString(calculateTotalPrice(productCart)));
+            }
+        });
+
         recyclerView.setAdapter(adapter);
         //recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
     }
 
-    private double calculateTotalPrice(ArrayList<Product> productCart){
+    private double calculateTotalPrice(ArrayList<CartItem> productCart){
         double tot = 0;
-        for(Product product: productCart){
+        for(CartItem cartItem: productCart){
 //            tot+=(product.getPrice()*Double.valueOf(product.getQuantity()));
+            tot+=cartItem.getTotalPrice();
         }
         return tot;
     }
