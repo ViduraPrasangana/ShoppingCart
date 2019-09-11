@@ -25,7 +25,6 @@ class Constants {
 
     static ArrayList<Product> allProducts;
     static ArrayList<Category> allCategories;
-    static ArrayList<Product> allProducts2;
     static ArrayList<CartItem> cartItems;
     static User user;
     final static int RANDOM_PRODUCTS_COUNT = 9;
@@ -174,6 +173,15 @@ class Constants {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("wishlists/"+FirebaseAuth.getInstance().getUid());
         ref.child(String.valueOf(product_id)).removeValue();
     }
+    static boolean isInCart(int product_id){
+        for(CartItem product : cartItems){
+            if(product.getId()==product_id){
+                System.out.println("still in");
+                return true;
+            }
+        }
+        return false;
+    }
     static boolean isInWishList(int product_id){
         for(Product product : wishList){
             if(product.getId()==product_id){
@@ -182,6 +190,17 @@ class Constants {
         }
         return false;
     }
+
+    static void removeCartItemFromArray(int product_id){
+        for(CartItem item: cartItems){
+            if(product_id== item.getId()){
+                cartItems.remove(item);
+                System.out.println("removed");
+                break;
+            }
+        }
+    }
+
     static Product findProductFromAll(int product_id){
         for(Product product: allProducts){
             if(product.getId()==product_id){

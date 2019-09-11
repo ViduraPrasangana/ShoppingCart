@@ -29,5 +29,7 @@
 
     <color name="cart_remove_btn">#FF0808</color>
 
+    <color name="product_view_btn_added">#00C853</color>
+
 
 </resources>
