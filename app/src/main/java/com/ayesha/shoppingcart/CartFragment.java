@@ -24,8 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-//import android.util.Pair;
-
 public class CartFragment extends Fragment {
 
     static ArrayList<CartItem> productCart = new ArrayList<>();
@@ -33,7 +31,6 @@ public class CartFragment extends Fragment {
     private TextView price;
     private MaterialButton confirm;
     private RecyclerView productRecycleView;
-    //private Toolbar toolbar;
     private Context context;
 
     @Nullable
@@ -43,8 +40,6 @@ public class CartFragment extends Fragment {
 
         CartFragment.cartFragment = this;
         context = requireContext();
-//        View view =  inflater.inflate(R.layout.cart_fragment,container,false);
-      //  cartView = view;
         this.price = view.findViewById(R.id.price);
         this.confirm = view.findViewById(R.id.confirm);
         productRecycleView = view.findViewById(R.id.cartRecyclerView);
@@ -62,7 +57,12 @@ public class CartFragment extends Fragment {
         adapter.setClickListner(new RecyclerViewAdapterCart.OnItemClickListner() {
             @Override
             public void onDeleteClick(int position) {
-                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("carts/").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Integer.toString(productCart.get(position).getId()));
+                DatabaseReference dbRef = FirebaseDatabase.getInstance()
+                        .getReference("carts/")
+                        .child(FirebaseAuth.getInstance()
+                                .getCurrentUser().getUid())
+                        .child(Integer.toString(productCart.get(position)
+                                .getProductId()));
                 dbRef.removeValue();
                 productCart.remove(position);
                 adapter.notifyItemRemoved(position);
@@ -78,7 +78,6 @@ public class CartFragment extends Fragment {
     private double calculateTotalPrice(ArrayList<CartItem> productCart){
         double tot = 0;
         for(CartItem cartItem: productCart){
-//            tot+=(product.getPrice()*Double.valueOf(product.getQuantity()));
             tot+=cartItem.getTotalPrice();
         }
         return tot;
@@ -88,34 +87,26 @@ public class CartFragment extends Fragment {
         this.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Pair<View, String> p1 = Pair.create((View)CartFragment.this.productRecycleView,"recycleView");
-//                Pair<View, String> p2 = Pair.create((View)CartFragment.this.confirm, "confirm");
-//
-//                ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,p1,p2,p1,p2);
-                Intent intent = new Intent(CartFragment.this.getContext(), HolderBill.class);
-                //Bundle bundle = new Bundle();
 
-                intent.putExtra("price", CartFragment.this.price.getText());
-                context.startActivity(intent);
-
+                if(calculateTotalPrice(productCart)==0) return;
                 new AlertDialog.Builder(context)
                         .setTitle("Type of the delivery!")
                         .setMessage("Please select the type of delivery you want!")
                         .setPositiveButton("Collect Delivery", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent = new Intent(CartFragment.this.getContext(), CollectDeliveryActivity.class);
-                                intent.putExtra("price", CartFragment.this.price.getText());
+                                intent.putExtra("price",calculateTotalPrice(productCart));
                                 context.startActivity(intent);
                             }
                         })
                         .setNeutralButton("Home Delivery", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Intent intent2 = new Intent(CartFragment.this.getContext(), HomeDeliveryActivity.class);
-                                intent2.putExtra("price", CartFragment.this.price.getText());
+                                intent2.putExtra("price",calculateTotalPrice(productCart));
                                 context.startActivity(intent2);
                             }
                         })
-                        .setIcon(android.R.drawable.ic_dialog_info)
+
                         .show();
 
             }

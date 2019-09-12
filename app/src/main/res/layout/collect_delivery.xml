@@ -58,8 +58,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="400">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView4"
@@ -81,7 +80,6 @@
                 android:id="@+id/collectDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Collect the Order before"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="#03A9F4"
@@ -90,8 +88,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.29000002" />
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                app:layout_constraintVertical_bias="0.05" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -106,14 +104,13 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.53" />
+                app:layout_constraintTop_toBottomOf="@+id/collectDate"
+                app:layout_constraintVertical_bias="0.3" />
 
             <TextView
                 android:id="@+id/homeDeliveryPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Price"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="#03A9F4"
@@ -122,37 +119,43 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.65" />
+                app:layout_constraintTop_toBottomOf="@+id/textView6"
+                app:layout_constraintVertical_bias="0.1" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/homeDeliveryPrice"
+                app:layout_constraintVertical_bias="0.9">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/confirm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10sp"
+                    android:layout_weight="50"
+                    android:gravity="center"
+                    android:text="CONFIRM" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="40"
+                    android:gravity="center"
+                    android:text="CANCEL"
+                    app:backgroundTint="#E91E1E" />
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|top"
-            android:orientation="horizontal"
-            android:weightSum="100">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/confirm"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10sp"
-                android:layout_weight="50"
-                android:gravity="center"
-                android:text="CONFIRM" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cancel"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="40"
-                android:gravity="center"
-                android:text="CANCEL"
-                app:backgroundTint="#E91E1E" />
-
-        </LinearLayout>
 
 
     </LinearLayout>

@@ -83,6 +83,11 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    public void reloadAdapter(){
+        System.out.println("updated");
+        updateRecyclerView(randomProductsList);
+    }
+
     private ArrayList<Product> getRandomProducts(ArrayList<Product> products) {
         ArrayList<Product> shuffledProducts = new ArrayList<>(products);
         Collections.shuffle(shuffledProducts);

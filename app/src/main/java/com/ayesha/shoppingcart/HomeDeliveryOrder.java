@@ -4,18 +4,24 @@ import java.util.ArrayList;
 
 public class HomeDeliveryOrder extends Order {
 
-    private String collectAddress;
+    private String deliveryAddress;
+    public String orderType = Constants.ORDERTYPE_DELIVERY;
 
-    public HomeDeliveryOrder(ArrayList<CartItem> cartItems, int totalPrice, String collectAddress) {
-        super(cartItems, totalPrice);
-        this.collectAddress = collectAddress;
+    public HomeDeliveryOrder() {
     }
 
-    public String getCollectAddress() {
-        return collectAddress;
+    public HomeDeliveryOrder(ArrayList<CartItem> cartItems, double totalPrice, String collectAddress, String name, String mobileNumber) {
+        super(cartItems, totalPrice,name,mobileNumber);
+        this.deliveryAddress = collectAddress;
     }
 
-    public void setCollectAddress(String collectAddress) {
-        this.collectAddress = collectAddress;
+    public String getDeliveryAddress() {
+        return deliveryAddress;
     }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+
 }

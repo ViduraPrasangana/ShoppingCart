@@ -50,7 +50,7 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         this.postiton = position;
         final CartItem tempCartItem = cartItems.get(position);
-        final Product tempProduct = Constants.findProductFromAll(tempCartItem.getId()); //This will hold the relevent Category object for the relevent Recyclcer View
+        final Product tempProduct = Constants.findProductFromAll(tempCartItem.getProductId()); //This will hold the relevent Category object for the relevent Recyclcer View
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).build();
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(

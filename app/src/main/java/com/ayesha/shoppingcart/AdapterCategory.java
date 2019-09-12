@@ -61,11 +61,9 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.ViewHo
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Constants.showToast(context, category.getName());
                 Pair<View, String> p1 = Pair.create((View) logo, "logo");
                 Pair<View, String> p2 = Pair.create((View) toolbar, "toolbar");
                 Pair<View, String> p3 = Pair.create((View) holder.name, "category");
-
 
                 ActivityOptionsCompat option = ActivityOptionsCompat
                         .makeSceneTransitionAnimation((Activity) context, p1, p2,p3);

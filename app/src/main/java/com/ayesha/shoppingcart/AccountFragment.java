@@ -1,7 +1,6 @@
 package com.ayesha.shoppingcart;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +14,16 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 public class AccountFragment extends Fragment {
 
     public static User user ; //User object that will show
     private TextView firstName;
-    //private TextView lastName;
     private TextView email;
     private TextView number;
     private TextView addr;
@@ -45,15 +40,6 @@ public class AccountFragment extends Fragment {
 
     public static AccountFragment accountFragment;
 
-
-    @Override
-    public void onStart() {
-
-        super.onStart();
-        //Constants.fetchTheCurrentUser();
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,9 +49,6 @@ public class AccountFragment extends Fragment {
 
         accountFragment = this;
         firstName = view.findViewById(R.id.firstName);
-        //firstName.setText(user.getEmail()+"assasaasa");
-        //Log.d("HIIIiiIIIIII",this.user.getEmail());
-        //lastName = view.findViewById(R.id.lastName);
         email = view.findViewById(R.id.email);
         number = view.findViewById(R.id.number);
         addr = view.findViewById(R.id.addr);
@@ -82,9 +65,6 @@ public class AccountFragment extends Fragment {
 
         setUser();
 
-        //user = new User(addr.getText().toString(),email.getText().toString(),firstName.getText().toString(),lastName.getText().toString(),number.getText().toString());
-        //------------------------------//
-
         this.btnEditListner(); //btnEdit onClickListner
         this.btnSaveListner(); //btnSave onClickListner
         this.btnLogoutListener(); //btnLogout onClickListner
@@ -93,35 +73,13 @@ public class AccountFragment extends Fragment {
 
     }
 
-    void loadUser(){
-        this.user = Constants.user;
-    }
-
-    static void setUser(){
+    private static void setUser(){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users/"+FirebaseAuth.getInstance().getUid() + "/");
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //ArrayList<User> tempUser = new ArrayList<>();
-                ArrayList<String> userAttributes = new ArrayList<>();
-                User user2 ;
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    Log.d("HI12212121I2I12I12", snapshot.getValue(Object.class).toString());
-                    if(snapshot.getValue(String.class)!=null) {
-                        //user2 = new User((String)snapshot.child("address").getValue(), (String)snapshot.child("email").getValue(),(String)snapshot.child("firstName").getValue(),(String)snapshot.child("lastName").getValue(),(String)snapshot.child("number").getValue());
-                       userAttributes.add(snapshot.getValue(String.class));
-                        // User(String address, String email, String firstName, String lastName, String number)
-                        //tempUser.add(snapshot.getValue(User.class));
-                        //tempUser.add(user2);
-                    }
-                }
-                //AccountFragment.this.setUser(userTemp);
-                user = new User(userAttributes.get(0), userAttributes.get(1), userAttributes.get(2), userAttributes.get(3), userAttributes.get(4));
-                Log.d("HI12212121I2I12I12", user.getLastName());
-                Log.d("HI12212121I2I12I12", user.getFirstName());
+                user = dataSnapshot.getValue(User.class);
                 AccountFragment.accountFragment.firstName.setText(user.getFirstName()+" "+user.getLastName());
-               // AccountFragment.accountFragment.lastName.setText(user.getLastName());
-               // AccountFragment.accountFragment.lastName.setText("temp");
                 AccountFragment.accountFragment.email.setText(user.getEmail());
                 AccountFragment.accountFragment.number.setText(user.getNumber());
                 AccountFragment.accountFragment.addr.setText(user.getAddress());
@@ -132,8 +90,6 @@ public class AccountFragment extends Fragment {
                 AccountFragment.accountFragment.numberEdit.setText(user.getNumber());
                 AccountFragment.accountFragment.addrEdit.setText(user.getAddress());
 
-                Log.d("HIIIIIIIII",user.getEmail());
-
             }
 
             @Override
@@ -142,12 +98,6 @@ public class AccountFragment extends Fragment {
             }
         });
     }
-
-//    private static void setUser(User user){
-//        AccountFragment.user = user;
-//    }
-
-
 
 
     private void btnEditListner(){
@@ -184,15 +134,11 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
 
                 boolean temp = AccountFragment.this.formCheck();
-                Log.d("HIIIIIIIIII",Boolean.toString(temp));
 
                 if(temp){
-                    Log.d("HIIIIIIIIII22222",btnSave.toString());
                 }
 
                 else if(!(temp)){
-
-                    Log.d("HIIIIIIIIII333333333",btnSave.toString());
 
                     //Change the btnEdit to enable
                     btnEdit.setEnabled(true);
@@ -234,9 +180,6 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
-//                startActivity(new Intent(getActivity(),LoginActivity.class));
-                Constants.showToast(getActivity(),"Logout Successfull!");
-
             }
         });
     }

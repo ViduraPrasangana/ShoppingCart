@@ -31,5 +31,7 @@
 
     <color name="product_view_btn_added">#00C853</color>
 
+    <color name="invoice_text">#2E3D2E</color>
+
 
 </resources>

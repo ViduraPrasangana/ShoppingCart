@@ -47,7 +47,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.Produc
             super(itemView);
             imageView = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.title);
-            price = itemView.findViewById(R.id.homeDeliveryPrice);
+            price = itemView.findViewById(R.id.price);
             materialCardView = itemView.findViewById(R.id.card);
             wishBtn = itemView.findViewById(R.id.wishBtn);
             wishBtn.setAlpha(0.55f);

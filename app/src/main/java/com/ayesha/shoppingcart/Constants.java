@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,8 @@ class Constants {
     static ArrayList<CartItem> cartItems;
     static User user;
     final static int RANDOM_PRODUCTS_COUNT = 9;
+    final static String ORDERTYPE_COLLECT = "COLLECT";
+    final static String ORDERTYPE_DELIVERY = "DELIVERY";
 
     static ArrayList<Product> wishList;
 
@@ -36,13 +40,10 @@ class Constants {
     public static void fetchTheCurrentUser(){
         DatabaseReference dbRef;
         dbRef = FirebaseDatabase.getInstance().getReference("users/"+FirebaseAuth.getInstance().getUid());
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User tempUser = dataSnapshot.getValue(User.class);
-                user = tempUser;
-                //HomeFragment.homeFragment.loadRandomProducts();
-                //activity.dialogDismiss();
+                user = dataSnapshot.getValue(User.class);
             }
 
             @Override
@@ -134,14 +135,6 @@ class Constants {
     static void showSnack(View view,String text){
         Snackbar.make(view,text,Snackbar.LENGTH_SHORT).show();
     }
-    static void showRedSnack(View view,String text){
-        Snackbar snackbar;
-        snackbar = Snackbar.make(view,text,Snackbar.LENGTH_SHORT);
-        View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(0x00FF7F7F);
-        snackbar.show();
-
-    }
     static void showAlertBox(Context context, String title, String message){
         new AlertDialog.Builder(context)
                 .setTitle(title)
@@ -171,11 +164,18 @@ class Constants {
     }
     static void removeFromWishList(int product_id){
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("wishlists/"+FirebaseAuth.getInstance().getUid());
-        ref.child(String.valueOf(product_id)).removeValue();
+        ref.child(String.valueOf(product_id)).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    HomeFragment.homeFragment.reloadAdapter();
+                }
+            }
+        });
     }
     static boolean isInCart(int product_id){
         for(CartItem product : cartItems){
-            if(product.getId()==product_id){
+            if(product.getProductId()==product_id){
                 System.out.println("still in");
                 return true;
             }
@@ -193,7 +193,7 @@ class Constants {
 
     static void removeCartItemFromArray(int product_id){
         for(CartItem item: cartItems){
-            if(product_id== item.getId()){
+            if(product_id== item.getProductId()){
                 cartItems.remove(item);
                 System.out.println("removed");
                 break;

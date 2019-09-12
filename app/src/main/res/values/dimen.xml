@@ -3,4 +3,6 @@
     <dimen name="loginTextWidth">300dp</dimen>
     <dimen name="loginButtonWidthPri">208dp</dimen>
     <dimen name="registerButtonWidthSec">100dp</dimen>
+
+    <dimen name="invoiceHeaderLength">150dp</dimen>
 </resources>

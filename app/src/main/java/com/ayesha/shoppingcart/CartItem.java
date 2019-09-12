@@ -1,24 +1,24 @@
 package com.ayesha.shoppingcart;
 
 public class CartItem {
-    private int id;
+    private int productId;
     private int quantity;
     private double totalPrice;
 
     public CartItem() {
     }
 
-    public CartItem(int id, int quantity, double totalPrice) {
-        this.id = id;
+    public CartItem(int productId, int quantity, double totalPrice) {
+        this.productId = productId;
         this.quantity = quantity;
         this.totalPrice = totalPrice;
     }
-    public void setId(int id){
-        this.id = id;
+    public void setProductId(int productId){
+        this.productId = productId;
     }
 
-    public int getId(){
-        return id;
+    public int getProductId(){
+        return productId;
     }
 
     public int getQuantity() {

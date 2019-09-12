@@ -1,213 +1,279 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#3E16B19A"
-        android:paddingTop="50dp">
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:transitionName="toolbar"
+        app:title="Home">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="15dp"
+            android:paddingBottom="5dp">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:src="@drawable/logo"
+                android:transitionName="logo" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="Account"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="30sp"
+                android:transitionName="category" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbars="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="#3E16B19A">
 
-            <TextView
-                android:id="@+id/number"
+            <LinearLayout
+                android:id="@+id/details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="55dp"
-                android:text="CONTACT NO."
-                android:textAllCaps="true"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email" />
-
-            <TextView
-                android:id="@+id/firstName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="54dp"
-                android:text="Name"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.52"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/categoryImage" />
-
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Email"
-                android:textAllCaps="false"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/firstName" />
-
-            <TextView
-                android:id="@+id/addr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="55dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="55dp"
-                android:text="Address"
-                android:textAllCaps="true"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/number" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEdit"
-                android:layout_width="@dimen/loginButtonWidthPri"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:background="@color/btnPrimary"
-                android:shadowRadius="0"
-                android:text="EDIT"
-                android:transitionName="register"
-                app:layout_constraintEnd_toStartOf="@+id/btnSave"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/addr" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSave"
-                android:layout_width="78dp"
-                android:layout_height="51dp"
-                android:layout_marginTop="64dp"
-                android:backgroundTint="@color/btnSecondary"
-                android:enabled="false"
-                android:text="SAVE"
-                android:transitionName="login"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnEdit"
-                app:layout_constraintTop_toBottomOf="@+id/addr" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
-                android:layout_width="328dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginEnd="45dp"
-                android:background="@color/btnPrimary"
-                android:shadowRadius="0"
-                android:text="LOGOUT"
-                android:transitionName="register"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnSave" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/firstNameEdit"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="@dimen/loginTextWidth"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="46dp"
-                android:layout_marginEnd="69dp"
-                android:hint="First Name"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/categoryImage" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/lastNameEdit"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="@dimen/loginTextWidth"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="69dp"
-                android:hint="Last Name"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.518"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/firstNameEdit" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/emailEdit"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="@dimen/loginTextWidth"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="69dp"
-                android:hint="Email"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.518"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/lastNameEdit" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/numberEdit"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="@dimen/loginTextWidth"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="69dp"
-                android:hint="Contact no."
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.481"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addrEdit"
-                style="@style/Widget.AppCompat.EditText"
-                android:layout_width="@dimen/loginTextWidth"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="69dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="69dp"
-                android:hint="Address"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.518"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/numberEdit" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/categoryImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/logo"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@drawable/account_detail_bg"
+                android:minWidth="@dimen/loginTextWidth"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"
-                app:layout_constraintHorizontal_bias="0.5"/>
+                app:layout_constraintVertical_bias="0.15">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/firstName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name"
+                        android:textAllCaps="false"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/categoryImage" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Email"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="CONTACT NO."
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/addr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center"
+                    android:text="Address"
+                    android:textAllCaps="true"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/number" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/editButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.9">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="55"
+                    android:background="@color/btnPrimary"
+                    android:shadowRadius="0"
+                    android:text="EDIT"
+                    android:transitionName="register" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="20"
+                    android:backgroundTint="@color/btnSecondary"
+                    android:enabled="false"
+                    android:text="SAVE"
+                    android:transitionName="login" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:weightSum="100"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editButtons"
+                app:layout_constraintVertical_bias="0.0">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="80"
+                    android:background="@color/btnPrimary"
+                    android:shadowRadius="0"
+                    android:text="LOGOUT"
+                    android:transitionName="register"
+                    app:backgroundTint="@color/cart_remove_btn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/editDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="15dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.15">
+
+                <LinearLayout
+                    android:layout_width="@dimen/loginTextWidth"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="100">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/firstNameEdit"
+                        style="@style/Widget.AppCompat.EditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="50"
+                        android:hint="First Name"
+                        android:visibility="invisible" />
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lastNameEdit"
+                        style="@style/Widget.AppCompat.EditText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="50"
+                        android:hint="Last Name"
+                        android:visibility="invisible" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailEdit"
+                    style="@style/Widget.AppCompat.EditText"
+                    android:layout_width="@dimen/loginTextWidth"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="69dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="69dp"
+                    android:hint="Email"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.518"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lastNameEdit" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/numberEdit"
+                    style="@style/Widget.AppCompat.EditText"
+                    android:layout_width="@dimen/loginTextWidth"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="69dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="69dp"
+                    android:hint="Contact no."
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.481"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/emailEdit" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addrEdit"
+                    style="@style/Widget.AppCompat.EditText"
+                    android:layout_width="@dimen/loginTextWidth"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="69dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="69dp"
+                    android:hint="Address"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.518"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/numberEdit" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
