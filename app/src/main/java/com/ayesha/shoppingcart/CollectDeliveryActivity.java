@@ -62,14 +62,14 @@ public class CollectDeliveryActivity extends AppCompatActivity {
                 builder.setTitle("Are You Sure?");
                 builder.setMessage("Are you sure you want to cancel the Order?");
 
-                builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
 
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         MainActivity.mainActivity.setPage(2);
