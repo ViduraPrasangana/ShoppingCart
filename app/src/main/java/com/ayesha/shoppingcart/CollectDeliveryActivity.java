@@ -3,9 +3,7 @@ package com.ayesha.shoppingcart;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +27,7 @@ public class CollectDeliveryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collect_delivery);
 
-        price = findViewById(R.id.price);
+        price = findViewById(R.id.homeDeliveryPrice);
         price.setText(getIntent().getStringExtra("price"));
 
         collectDate = findViewById(R.id.collectDate);
@@ -64,14 +62,14 @@ public class CollectDeliveryActivity extends AppCompatActivity {
                 builder.setTitle("Are You Sure?");
                 builder.setMessage("Are you sure you want to cancel the Order?");
 
-                builder.setPositiveButton("CONFIRM", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                     }
                 });
 
-                builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         MainActivity.mainActivity.setPage(2);

@@ -81,7 +81,7 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
             super(itemView);
             image = itemView.findViewById(R.id.imageView);
             name = itemView.findViewById(R.id.name);
-            price = itemView.findViewById(R.id.price);
+            price = itemView.findViewById(R.id.homeDeliveryPrice);
             quantity = itemView.findViewById(R.id.quantiity);
             close = itemView.findViewById(R.id.close);
             cartHolderLayout = itemView.findViewById(R.id.cartHolderLayout);

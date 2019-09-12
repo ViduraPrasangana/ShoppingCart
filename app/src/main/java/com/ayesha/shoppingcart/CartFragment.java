@@ -43,8 +43,9 @@ public class CartFragment extends Fragment {
 
         CartFragment.cartFragment = this;
         context = requireContext();
-
-        this.price = view.findViewById(R.id.price);
+        View view =  inflater.inflate(R.layout.cart_fragment,container,false);
+        cartView = view;
+        this.price = view.findViewById(R.id.homeDeliveryPrice);
         this.confirm = view.findViewById(R.id.confirm);
         productRecycleView = view.findViewById(R.id.cartRecyclerView);
         productRecycleView.addItemDecoration(new DividerItemDecoration(context,LinearLayoutManager.VERTICAL));
@@ -109,9 +110,9 @@ public class CartFragment extends Fragment {
                         })
                         .setNeutralButton("Home Delivery", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(CartFragment.this.getContext(), HomeDeliveryActivity.class);
-                                //intent.putExtra("price", CartFragment.this.price.getText());
-                                context.startActivity(intent);
+                                Intent intent2 = new Intent(CartFragment.this.getContext(), HomeDeliveryActivity.class);
+                                intent2.putExtra("price", CartFragment.this.price.getText());
+                                context.startActivity(intent2);
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_info)
