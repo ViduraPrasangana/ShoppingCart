@@ -44,7 +44,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.Produc
             super(itemView);
             imageView = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.title);
-            price = itemView.findViewById(R.id.price);
+            price = itemView.findViewById(R.id.homeDeliveryPrice);
             materialCardView = itemView.findViewById(R.id.card);
         }
 

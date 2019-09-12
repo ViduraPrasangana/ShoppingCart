@@ -1,7 +1,6 @@
 package com.ayesha.shoppingcart;
 
 import android.content.Context;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -96,7 +92,7 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
             super(itemView);
             image = itemView.findViewById(R.id.imageView);
             name = itemView.findViewById(R.id.name);
-            price = itemView.findViewById(R.id.price);
+            price = itemView.findViewById(R.id.homeDeliveryPrice);
             quantity = itemView.findViewById(R.id.quantiity);
             close = itemView.findViewById(R.id.close);
             cartHolderLayout = itemView.findViewById(R.id.cartHolderLayout);

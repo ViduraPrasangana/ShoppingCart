@@ -97,7 +97,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/price"
+                    android:id="@+id/homeDeliveryPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"

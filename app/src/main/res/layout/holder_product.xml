@@ -43,7 +43,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/homeDeliveryPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="400/="

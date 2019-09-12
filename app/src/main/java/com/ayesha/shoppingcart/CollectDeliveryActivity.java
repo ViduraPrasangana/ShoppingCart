@@ -3,9 +3,7 @@ package com.ayesha.shoppingcart;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +27,7 @@ public class CollectDeliveryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.collect_delivery);
 
-        price = findViewById(R.id.price);
+        price = findViewById(R.id.homeDeliveryPrice);
         price.setText(getIntent().getStringExtra("price"));
 
         collectDate = findViewById(R.id.collectDate);
