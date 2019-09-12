@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener authStateListener;
 
-    private static LoadingDialog loadingDialog;
+    private LoadingDialog loadingDialog;
 
 
     @Override
@@ -72,9 +72,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         bnv.setSelectedItemId(R.id.categoriesNav);
                         break;
                     case 2:
-                        bnv.setSelectedItemId(R.id.cartNav);
+                        bnv.setSelectedItemId(R.id.wishlistNav);
                         break;
                     case 3:
+                        bnv.setSelectedItemId(R.id.cartNav);
+                        break;
+                    case 4:
                         bnv.setSelectedItemId(R.id.accountNav);
                         break;
                 }
@@ -100,14 +103,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
-    public static void loadAllProducts(){
+    public void loadAllProducts(){
         loadingDialog.showDialog();
         Constants.fetchProductsFromDB(mainActivity);
         Constants.fetchAllCategoriesFromDB(mainActivity);
         Constants.fetchTheCurrentUser();
+        Constants.fetchWishListFromDB(mainActivity);
+        Constants.fetchCartItemsFromDB(mainActivity);
     }
 
-    public static void dialogDismiss(){
+    public void dialogDismiss(){
         loadingDialog.closeDialog();
     }
 
@@ -138,11 +143,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.categoriesNav:
                 viewPager.setCurrentItem(1);
                 break;
-            case R.id.cartNav:
+            case R.id.wishlistNav:
                 viewPager.setCurrentItem(2);
                 break;
-            case R.id.accountNav:
+            case R.id.cartNav:
                 viewPager.setCurrentItem(3);
+                break;
+            case R.id.accountNav:
+                viewPager.setCurrentItem(4);
                 break;
         }
         return true;

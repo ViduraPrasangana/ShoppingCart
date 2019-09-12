@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 enum MainScreen {
     HOME(new HomeFragment()),
     CATEGORY(new CategoryFragment()),
+    WISHLIST(new WishFragment()),
     CART(new CartFragment()),
     ACCOUNT(new AccountFragment());
 

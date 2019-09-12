@@ -19,7 +19,7 @@ public class HolderBill extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         this.price = getIntent().getStringExtra("price");
-        setContentView(R.layout._holder_bill);
+        setContentView(R.layout.holder_bill);
 
         priceView = findViewById(R.id.price);
         homeButton = findViewById(R.id.homeButton);
