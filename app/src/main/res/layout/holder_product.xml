@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:padding="5dp" />
 
                 <TextView
                     android:id="@+id/title"
@@ -78,9 +78,8 @@
                     android:textColor="@color/product_card_price"
                     android:textSize="18sp" />
             </LinearLayout>
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </com.google.android.material.card.MaterialCardView>
+
+
 

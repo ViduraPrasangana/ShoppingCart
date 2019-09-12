@@ -43,9 +43,9 @@ public class CartFragment extends Fragment {
 
         CartFragment.cartFragment = this;
         context = requireContext();
-        View view =  inflater.inflate(R.layout.cart_fragment,container,false);
-        cartView = view;
-        this.price = view.findViewById(R.id.homeDeliveryPrice);
+//        View view =  inflater.inflate(R.layout.cart_fragment,container,false);
+      //  cartView = view;
+        this.price = view.findViewById(R.id.price);
         this.confirm = view.findViewById(R.id.confirm);
         productRecycleView = view.findViewById(R.id.cartRecyclerView);
         productRecycleView.addItemDecoration(new DividerItemDecoration(context,LinearLayoutManager.VERTICAL));
