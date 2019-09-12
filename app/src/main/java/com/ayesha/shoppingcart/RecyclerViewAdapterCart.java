@@ -43,17 +43,6 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.holder_cart_product, parent, false);
         final ViewHolder holder = new ViewHolder(view);
-//        holder.close.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                holder.cartHolderLayout.setVisibility(View.INVISIBLE);
-//
-//                DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("carts/").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(Integer.toString(cartItems.get(postiton).getId()));
-//                dbRef.removeValue();
-//
-//                Constants.fetchCartItemsFromDB(view);
-//            }
-//        });
         return holder;
     }
 
@@ -61,7 +50,7 @@ public class RecyclerViewAdapterCart extends RecyclerView.Adapter<RecyclerViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         this.postiton = position;
         final CartItem tempCartItem = cartItems.get(position);
-        final Product tempProduct = Constants.allProducts.get(tempCartItem.getId()-1); //This will hold the relevent Category object for the relevent Recyclcer View
+        final Product tempProduct = Constants.findProductFromAll(tempCartItem.getId()); //This will hold the relevent Category object for the relevent Recyclcer View
         DisplayImageOptions options = new DisplayImageOptions.Builder().cacheOnDisk(true).build();
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(

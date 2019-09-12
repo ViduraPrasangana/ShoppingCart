@@ -1,12 +1,16 @@
 package com.ayesha.shoppingcart;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -64,19 +68,48 @@ public class ProductViewActivity extends AppCompatActivity {
 
             }
         });
-
+        setAddToCartButtonBG();
         addToCartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("carts/"+ FirebaseAuth.getInstance().getUid());
-                ref.child(String.valueOf(id)).setValue(new CartItem(id,quantity,quantity*price));
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("carts/" + FirebaseAuth.getInstance().getUid());
 
-                MainActivity.mainActivity.setPage(0);
-                finish();
+                if(!Constants.isInCart(id)) {
+                    ref.child(String.valueOf(id)).setValue(new CartItem(id, quantity, quantity * price)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                setAddToCartButtonBG();
+                            }
+                        }
+                    });
+                } else {
+                    ref.child(String.valueOf(id)).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Constants.removeCartItemFromArray(id);
+                                setAddToCartButtonBG();
+                            }
+                        }
+                    });
+                }
+
             }
         });
-
         bindToView();
+
+    }
+
+    private void setAddToCartButtonBG(){
+        if(Constants.isInCart(id)){
+            addToCartButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.product_view_btn_added)));
+            addToCartButton.setText("Remove from cart");
+        } else {
+            addToCartButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+            addToCartButton.setText("Add to cart");
+
+        }
     }
 
     private void bindToView (){
@@ -87,6 +120,7 @@ public class ProductViewActivity extends AppCompatActivity {
                 imageView, options);
 
         titleView.setText(title);
+        titleView.setSelected(true);
         String price2 = "Unit price: "+ price;
         priceView.setText(price2);
     }

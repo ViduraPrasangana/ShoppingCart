@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +30,6 @@ public class CartFragment extends Fragment {
 
     static ArrayList<CartItem> productCart = new ArrayList<>();
     static CartFragment cartFragment;
-    private static View cartView;
     private TextView price;
     private MaterialButton confirm;
     private RecyclerView productRecycleView;
@@ -40,50 +39,26 @@ public class CartFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view =  inflater.inflate(R.layout.cart_fragment,container,false);
+
         CartFragment.cartFragment = this;
         context = requireContext();
         View view =  inflater.inflate(R.layout.cart_fragment,container,false);
         cartView = view;
         this.price = view.findViewById(R.id.homeDeliveryPrice);
         this.confirm = view.findViewById(R.id.confirm);
-        this.productRecycleView = view.findViewById(R.id.cartRecyclerView);
-        //this.toolbar = view.findViewById(R.id.cartToolbar);
-
-        Constants.fetchCartItemsFromDB(view);
+        productRecycleView = view.findViewById(R.id.cartRecyclerView);
+        productRecycleView.addItemDecoration(new DividerItemDecoration(context,LinearLayoutManager.VERTICAL));
 
         this.confirmOnClickListner();
-        //initProducts(view);
         return view;
     }
 
-    public void onResume() {
-
-        super.onResume();
-        Constants.fetchCartItemsFromDB(cartView);
-
-
-    }
-
-    private void initProducts(View view){
-
-        //Constants.fetchProductsFromDB2();
-        Log.d("Haaaaaaaaaa",Integer.toString(CartFragment.productCart.size()));
-        //this.productCart = Constants.allProducts2;
-        //this.initRecycleView(view);
-    }
-
-    void setProductCart(){
-        CartFragment.productCart = Constants.cartItems;
-    }
-
-    void initRecycleView(View view, final ArrayList<CartItem> productCart){
+    void initRecycleView(final ArrayList<CartItem> productCart){
         CartFragment.productCart = productCart;
         this.price.setText(Double.toString(this.calculateTotalPrice(productCart)));
-        RecyclerView recyclerView = view.findViewById(R.id.cartRecyclerView);
         final RecyclerViewAdapterCart adapter = new RecyclerViewAdapterCart(getActivity(),productCart);
 
-
-        Log.d("SIZEEEEEEEEEEEEE", Integer.toString(productCart.size()));
         adapter.setClickListner(new RecyclerViewAdapterCart.OnItemClickListner() {
             @Override
             public void onDeleteClick(int position) {
@@ -95,9 +70,8 @@ public class CartFragment extends Fragment {
             }
         });
 
-        recyclerView.setAdapter(adapter);
-        //recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        productRecycleView.setAdapter(adapter);
+        productRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
     }
 
@@ -114,6 +88,15 @@ public class CartFragment extends Fragment {
         this.confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Pair<View, String> p1 = Pair.create((View)CartFragment.this.productRecycleView,"recycleView");
+//                Pair<View, String> p2 = Pair.create((View)CartFragment.this.confirm, "confirm");
+//
+//                ActivityOptionsCompat option = ActivityOptionsCompat.makeSceneTransitionAnimation((Activity) context,p1,p2,p1,p2);
+                Intent intent = new Intent(CartFragment.this.getContext(), HolderBill.class);
+                //Bundle bundle = new Bundle();
+
+                intent.putExtra("price", CartFragment.this.price.getText());
+                context.startActivity(intent);
 
                 new AlertDialog.Builder(context)
                         .setTitle("Type of the delivery!")
@@ -139,20 +122,3 @@ public class CartFragment extends Fragment {
         });
     }
 }
-//
-//                Constants.showToast(context, "clicked");
-//                        Pair<View, String> p1 = Pair.create((View) holder.imageView, "image");
-//        Pair<View, String> p2 = Pair.create((View) holder.title, "title");
-//        Pair<View, String> p3 = Pair.create((View) logo, "logo");
-//        Pair<View, String> p4 = Pair.create((View) toolbar, "toolbar");
-//
-//        ActivityOptionsCompat option = ActivityOptionsCompat
-//        .makeSceneTransitionAnimation((Activity) context, p1, p2,p3, p4);
-//        Intent intent = new Intent(context, ProductViewActivity.class);
-//        Bundle bundle = new Bundle();
-//
-//        intent.putExtra("product_id",product.getId());
-//        intent.putExtra("title",product.getName());
-//        intent.putExtra("price",product.getPrice());
-//        intent.putExtra("image_url",product.getImage_url());
-//        context.startActivity(intent, option.toBundle());

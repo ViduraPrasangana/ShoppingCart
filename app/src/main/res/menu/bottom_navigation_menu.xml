@@ -2,6 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Home" android:id="@+id/homeNav" android:icon="@drawable/ic_home_black_24dp"/>
     <item android:title="Categories" android:id="@+id/categoriesNav" android:icon="@drawable/ic_format_list_bulleted_black_24dp"/>
+    <item android:title="WishList" android:id="@+id/wishlistNav" android:icon="@drawable/ic_playlist_add_white_navdp"/>
     <item android:title="Cart" android:id="@+id/cartNav" android:icon="@drawable/ic_shopping_cart_black_24dp"/>
     <item android:title="Account" android:id="@+id/accountNav" android:icon="@drawable/ic_person_black_24dp"/>
 </menu>

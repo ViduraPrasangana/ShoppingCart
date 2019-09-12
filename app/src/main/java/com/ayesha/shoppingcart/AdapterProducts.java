@@ -3,6 +3,7 @@ package com.ayesha.shoppingcart;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -39,6 +41,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.Produc
         ImageView imageView;
         TextView title, price;
         MaterialCardView materialCardView;
+        FloatingActionButton wishBtn;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -46,6 +49,8 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.Produc
             title = itemView.findViewById(R.id.title);
             price = itemView.findViewById(R.id.homeDeliveryPrice);
             materialCardView = itemView.findViewById(R.id.card);
+            wishBtn = itemView.findViewById(R.id.wishBtn);
+            wishBtn.setAlpha(0.55f);
         }
 
     }
@@ -72,7 +77,6 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.Produc
         holder.materialCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Constants.showToast(context, "clicked");
                 Pair<View, String> p1 = Pair.create((View) holder.imageView, "image");
                 Pair<View, String> p2 = Pair.create((View) holder.title, "title");
                 Pair<View, String> p3 = Pair.create((View) logo, "logo");
@@ -90,11 +94,38 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.Produc
                 context.startActivity(intent, option.toBundle());
             }
         });
+
+        if(!Constants.isInWishList(product.getId())){
+            holder.wishBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_playlist_add_black_24dp));
+            holder.wishBtn.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.wish_btn_normal)));
+        }else {
+            holder.wishBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_playlist_add_check_black_24dp));
+            holder.wishBtn.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.wish_btn_checked)));
+        }
+
+        holder.wishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Constants.isInWishList(product.getId())){
+                    holder.wishBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_playlist_add_black_24dp));
+                    holder.wishBtn.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.wish_btn_normal)));
+                    Constants.removeFromWishList(product.getId());
+                    Constants.showSnack(holder.materialCardView,"Removed from wish list");
+                }else {
+                    holder.wishBtn.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_playlist_add_check_black_24dp));
+                    holder.wishBtn.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.wish_btn_checked)));
+                    Constants.addToWishList(product.getId());
+                    Constants.showSnack(holder.materialCardView,"Added to wish list");
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
+        if(productArrayList!=null)
         return productArrayList.size();
+        return  0;
     }
 
 }

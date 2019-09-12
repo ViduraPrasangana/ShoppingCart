@@ -35,11 +35,21 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:text="category"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="30sp"
                 android:transitionName="category" />
+
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:mt_placeholder="Search here" />
         </LinearLayout>
+
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
