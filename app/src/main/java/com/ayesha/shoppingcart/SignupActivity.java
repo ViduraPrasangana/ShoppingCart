@@ -1,7 +1,9 @@
 package com.ayesha.shoppingcart;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -31,8 +33,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_layout);
         bg = findViewById(R.id.bg);
-        bg.setBlur(1.5f);
-
+        bg.setBlur(Constants.BLUR_CURRENT_VALUE);
         context = this;
 
         auth = FirebaseAuth.getInstance();
@@ -52,6 +53,7 @@ public class SignupActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginActivity.loginActivity.setBlur(Constants.BLUR_CURRENT_VALUE);
                 supportFinishAfterTransition();
             }
         });
@@ -67,6 +69,8 @@ public class SignupActivity extends AppCompatActivity {
                 clearAllFields();
             }
         });
+
+        initializeBlur();
     }
 
     private void signup() {
@@ -93,6 +97,27 @@ public class SignupActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void initializeBlur(){
+        new ValueAnimator();
+        final ValueAnimator valueAnimator = ValueAnimator.ofInt(Constants.BLUR_CURRENT_VALUE, Constants.BLUR_FINAL_VALUE_SIGNUP);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                int value = (int) valueAnimator.getAnimatedValue();
+                bg.setBlur(value);
+                Constants.BLUR_CURRENT_VALUE = value;
+            }
+        });
+        valueAnimator.setDuration(Constants.ANIMATION_DURATION);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                valueAnimator.start();
+
+            }
+        }, 500);
     }
 
     private User getUser() {

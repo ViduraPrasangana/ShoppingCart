@@ -33,6 +33,11 @@ class Constants {
     final static String ORDERTYPE_COLLECT = "COLLECT";
     final static String ORDERTYPE_DELIVERY = "DELIVERY";
 
+    static int BLUR_CURRENT_VALUE = 0;
+    static int BLUR_FINAL_VALUE_SIGNUP = 10;
+    static int BLUR_FINAL_VALUE_LOGIN = 0;
+    static int ANIMATION_DURATION = 1000;
+
     static ArrayList<Product> wishList;
 
     static boolean categoriesFetched,productsFetched, wishlistFetched, cartFetched = false;

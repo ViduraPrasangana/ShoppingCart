@@ -1,7 +1,9 @@
 package com.ayesha.shoppingcart;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,13 +30,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    static LoginActivity loginActivity;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
         bg = findViewById(R.id.bg);
-        bg.setBlur(1.5f);
+        bg.setBlur(Constants.BLUR_CURRENT_VALUE);
+
+        loginActivity = this;
 
         auth = FirebaseAuth.getInstance();
         checkUser(auth);
@@ -57,6 +63,12 @@ public class LoginActivity extends AppCompatActivity {
                 login();
             }
         });
+
+        initializeBlur();
+    }
+
+    void setBlur(float i){
+        bg.setBlur(i);
     }
 
     public void openRegister() {
@@ -71,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         ActivityOptionsCompat option = ActivityOptionsCompat
                 .makeSceneTransitionAnimation(this, p1, p2, p3, p4, p5,p6,p7);
         Intent registerIntent = new Intent(LoginActivity.this, SignupActivity.class);
-        startActivity(registerIntent, option.toBundle());
+        startActivityForResult(registerIntent,1, option.toBundle());
     }
 
     public void checkUser(FirebaseAuth auth){
@@ -94,6 +106,34 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Constants.showSnack(btnLogin,"Fill all fields");
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        initializeBlur();
+    }
+
+    private void initializeBlur(){
+        new ValueAnimator();
+        final ValueAnimator valueAnimator = ValueAnimator.ofInt(Constants.BLUR_CURRENT_VALUE, Constants.BLUR_FINAL_VALUE_LOGIN);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                System.out.println(valueAnimator.getAnimatedValue());
+                int value = (int) valueAnimator.getAnimatedValue();
+                bg.setBlur(value);
+                Constants.BLUR_CURRENT_VALUE = value;
+            }
+        });
+        valueAnimator.setDuration(Constants.ANIMATION_DURATION);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                valueAnimator.start();
+
+            }
+        }, 100);
     }
 
 
