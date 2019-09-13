@@ -90,6 +90,7 @@ public class SignupActivity extends AppCompatActivity {
                                 dbRef.setValue(currentUser);
                             }
                             Constants.openMain(context);
+                            finish();
                         }
                     } else {
                         Constants.showSnack(reset, "SignUp Failed");

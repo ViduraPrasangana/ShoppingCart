@@ -267,13 +267,13 @@
             android:background="@color/btnPrimary"
             android:shadowRadius="0"
             android:text="Register"
+            android:backgroundTint="@color/btnSecondary"
             android:transitionName="register" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSave"
             android:layout_width="@dimen/registerButtonWidthSec"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/btnSecondary"
             android:text="Login"
             android:transitionName="login" />
     </LinearLayout>

@@ -1,5 +1,4 @@
 package com.ayesha.shoppingcart;
-import android.os.Parcelable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -9,7 +8,7 @@ public class User  {
 
      public User(){}
 
-     public User(String address, String email, String firstName, String lastName, String number) {
+     public User(String email, String firstName, String lastName, String number, String address) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
