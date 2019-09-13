@@ -156,7 +156,6 @@ public class CollectDeliveryActivity extends AppCompatActivity {
                 builder.setNegativeButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        MainActivity.mainActivity.setPage(2);
                         finish();
                     }
                 });
